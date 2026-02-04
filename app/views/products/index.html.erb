@@ -1,0 +1,57 @@
+<div class="w-full">
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">所有产品</h1>
+    <p class="text-gray-600">浏览我们的精选产品</p>
+  </div>
+
+  <% if @products.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% @products.each do |product| %>
+        <%= link_to product_path(product), class: "group" do %>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <!-- 产品图片 -->
+            <div class="aspect-square bg-gray-200 overflow-hidden">
+              <% if product.image.attached? %>
+                <%= image_tag product.image, 
+                    class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300",
+                    alt: product.name %>
+              <% else %>
+                <div class="w-full h-full flex items-center justify-center">
+                  <span class="text-gray-400 text-lg">无图片</span>
+                </div>
+              <% end %>
+            </div>
+            
+            <!-- 产品信息 -->
+            <div class="p-4">
+              <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                <%= product.name %>
+              </h3>
+              
+              <% if product.description.present? %>
+                <p class="text-gray-600 text-sm mb-3 line-clamp-2">
+                  <%= truncate(product.description, length: 80) %>
+                </p>
+              <% end %>
+              
+              <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-blue-600">
+                  ¥<%= number_to_currency(product.price, unit: "", precision: 2) %>
+                </span>
+                <span class="text-sm text-blue-600 group-hover:underline">
+                  查看详情 →
+                </span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white shadow-lg rounded-lg p-16 text-center">
+      <div class="text-gray-400 text-6xl mb-4">📦</div>
+      <h2 class="text-2xl font-semibold text-gray-700 mb-2">暂无产品</h2>
+      <p class="text-gray-500">敬请期待更多精彩产品</p>
+    </div>
+  <% end %>
+</div>

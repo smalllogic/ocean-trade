@@ -1,0 +1,79 @@
+<div class="w-full max-w-4xl mx-auto">
+  <div class="mb-6 flex justify-between items-center">
+    <%= link_to "← 返回产品列表", admin_products_path, class: "text-blue-600 hover:text-blue-800" %>
+    <div class="space-x-2">
+      <%= link_to "编辑", edit_admin_product_path(@product), class: "bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition" %>
+      <%= link_to "删除", admin_product_path(@product), data: { turbo_method: :delete, turbo_confirm: "确定要删除这个产品吗？" }, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition" %>
+    </div>
+  </div>
+
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <!-- 产品图片 -->
+    <% if @product.image.attached? %>
+      <div class="w-full bg-gray-100">
+        <%= image_tag @product.image, class: "w-full h-96 object-contain" %>
+      </div>
+    <% else %>
+      <div class="w-full h-96 bg-gray-200 flex items-center justify-center">
+        <span class="text-gray-400 text-xl">无产品图片</span>
+      </div>
+    <% end %>
+
+    <!-- 产品信息 -->
+    <div class="p-8">
+      <!-- 状态标签 -->
+      <div class="mb-4">
+        <% if @product.hidden? %>
+          <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+            已隐藏
+          </span>
+        <% else %>
+          <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+            显示中
+          </span>
+        <% end %>
+      </div>
+
+      <!-- 产品名称 -->
+      <h1 class="text-4xl font-bold text-gray-900 mb-4"><%= @product.name %></h1>
+
+      <!-- 价格 -->
+      <div class="mb-6">
+        <span class="text-3xl font-bold text-blue-600">¥<%= number_to_currency(@product.price, unit: "", precision: 2) %></span>
+      </div>
+
+      <!-- 描述 -->
+      <div class="border-t pt-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">产品描述</h2>
+        <% if @product.description.present? %>
+          <p class="text-gray-700 leading-relaxed whitespace-pre-wrap"><%= @product.description %></p>
+        <% else %>
+          <p class="text-gray-400 italic">暂无描述</p>
+        <% end %>
+      </div>
+
+      <!-- 元数据 -->
+      <div class="border-t mt-8 pt-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-3">产品信息</h2>
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <dt class="text-sm font-medium text-gray-500">创建时间</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @product.created_at.strftime("%Y年%m月%d日 %H:%M") %></dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">更新时间</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @product.updated_at.strftime("%Y年%m月%d日 %H:%M") %></dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">产品ID</dt>
+            <dd class="mt-1 text-sm text-gray-900">#<%= @product.id %></dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">状态</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @product.hidden? ? "已隐藏" : "显示中" %></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

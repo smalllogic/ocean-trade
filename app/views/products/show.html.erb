@@ -1,0 +1,117 @@
+<div class="w-full max-w-6xl mx-auto">
+  <!-- 返回按钮 -->
+  <div class="mb-6">
+    <%= link_to products_path, class: "inline-flex items-center text-blue-600 hover:text-blue-800" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      返回产品列表
+    <% end %>
+  </div>
+
+  <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- 左侧：产品图片 -->
+      <div class="bg-gray-100 p-8 flex items-center justify-center">
+        <% if @product.image.attached? %>
+          <%= image_tag @product.image, 
+              class: "w-full h-auto rounded-lg shadow-md",
+              alt: @product.name %>
+        <% else %>
+          <div class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+            <span class="text-gray-400 text-2xl">无产品图片</span>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- 右侧：产品信息 -->
+      <div class="p-8">
+        <!-- 产品名称 -->
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+          <%= @product.name %>
+        </h1>
+
+        <!-- 价格 -->
+        <div class="mb-6">
+          <span class="text-4xl font-bold text-blue-600">
+            ¥<%= number_to_currency(@product.price, unit: "", precision: 2) %>
+          </span>
+        </div>
+
+        <!-- 分隔线 -->
+        <div class="border-t border-gray-200 my-6"></div>
+
+        <!-- 产品描述 -->
+        <div class="mb-8">
+          <h2 class="text-xl font-semibold text-gray-900 mb-3">产品描述</h2>
+          <% if @product.description.present? %>
+            <div class="text-gray-700 leading-relaxed whitespace-pre-wrap">
+              <%= @product.description %>
+            </div>
+          <% else %>
+            <p class="text-gray-400 italic">暂无详细描述</p>
+          <% end %>
+        </div>
+
+        <!-- 购买按钮区域 -->
+        <div class="space-y-3">
+          <%= button_to add_to_cart_product_path(@product), method: :post, class: "w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg transition-colors text-lg flex items-center justify-center" do %>
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+            <span>加入购物车</span>
+          <% end %>
+          
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition-colors text-lg">
+            立即购买
+          </button>
+        </div>
+
+        <!-- 产品信息 -->
+        <div class="mt-8 pt-6 border-t border-gray-200">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase mb-3">产品信息</h3>
+          <dl class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <dt class="text-gray-600">产品编号</dt>
+              <dd class="text-gray-900 font-medium">#<%= @product.id %></dd>
+            </div>
+            <div class="flex justify-between text-sm">
+              <dt class="text-gray-600">上架时间</dt>
+              <dd class="text-gray-900 font-medium"><%= @product.created_at.strftime("%Y年%m月%d日") %></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 相关产品推荐（可选） -->
+  <div class="mt-12">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">推荐产品</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <% Product.visible.where.not(id: @product.id).limit(4).each do |related_product| %>
+        <%= link_to product_path(related_product), class: "group" do %>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+            <div class="aspect-square bg-gray-200">
+              <% if related_product.image.attached? %>
+                <%= image_tag related_product.image, 
+                    class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300",
+                    alt: related_product.name %>
+              <% else %>
+                <div class="w-full h-full flex items-center justify-center">
+                  <span class="text-gray-400">无图片</span>
+                </div>
+              <% end %>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold text-gray-900 mb-2"><%= related_product.name %></h3>
+              <p class="text-xl font-bold text-blue-600">
+                ¥<%= number_to_currency(related_product.price, unit: "", precision: 2) %>
+              </p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
