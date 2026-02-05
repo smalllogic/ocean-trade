@@ -6,6 +6,11 @@ Rails.application.routes.draw do
     root "dashboard#index"
     get "dashboard", to: "dashboard#index"
     resources :products
+    resources :orders, only: [:index, :show] do
+      member do
+        patch :update_status
+      end
+    end
   end
   
   # Public products (前台产品展示)
