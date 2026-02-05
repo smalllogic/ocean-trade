@@ -25,4 +25,25 @@ class Cart < ApplicationRecord
   def total_quantity
     cart_items.sum(:quantity)
   end
+  
+  # 从购物车创建订单
+  def build_order(order_params = {})
+    # 创建新订单
+    order = Order.new(order_params)
+    order.status = "pending"
+    
+    # 遍历购物车项目，创建订单项目
+    cart_items.includes(:product).each do |cart_item|
+      order.order_items.build(
+        product: cart_item.product,
+        price: cart_item.product.price,  # 冻结当前价格
+        quantity: cart_item.quantity
+      )
+    end
+    
+    # 计算订单总价
+    order.total_price = order.order_items.sum { |item| item.price * item.quantity }
+    
+    order
+  end
 end
