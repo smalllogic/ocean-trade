@@ -1,7 +1,7 @@
 <div class="w-full max-w-7xl mx-auto px-6">
   <div class="mb-8">
-    <h1 class="text-4xl font-bold text-gray-900 mb-2">所有产品</h1>
-    <p class="text-gray-600">浏览我们的精选产品</p>
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">All Products</h1>
+    <p class="text-gray-600">Browse our curated collection</p>
   </div>
 
   <% if @products.any? %>
@@ -17,7 +17,7 @@
                     alt: product.name %>
               <% else %>
                 <div class="w-full h-full flex items-center justify-center">
-                  <span class="text-gray-400 text-lg">无图片</span>
+                  <span class="text-gray-400 text-lg">No Image</span>
                 </div>
               <% end %>
             </div>
@@ -39,7 +39,7 @@
                   ¥<%= number_to_currency(product.price, unit: "", precision: 2) %>
                 </span>
                 <span class="text-sm text-blue-600 group-hover:underline">
-                  查看详情 →
+                  View Details →
                 </span>
               </div>
             </div>
@@ -50,8 +50,8 @@
   <% else %>
     <div class="bg-white shadow-lg rounded-lg p-16 text-center">
       <div class="text-gray-400 text-6xl mb-4">📦</div>
-      <h2 class="text-2xl font-semibold text-gray-700 mb-2">暂无产品</h2>
-      <p class="text-gray-500">敬请期待更多精彩产品</p>
+      <h2 class="text-2xl font-semibold text-gray-700 mb-2">No Products Yet</h2>
+      <p class="text-gray-500">Stay tuned for amazing products coming soon</p>
     </div>
   <% end %>
 </div>

@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
       @cart.cart_items.destroy_all
       session[:cart_id] = nil
       
-      redirect_to order_path(@order), notice: "订单创建成功！订单号：#{@order.id}"
+      redirect_to order_path(@order), notice: "Order created successfully! Order #: #{@order.id}"
     else
       render :new, status: :unprocessable_entity
     end

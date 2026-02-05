@@ -8,12 +8,12 @@
         <% end %>
         
         <div class="hidden md:flex space-x-6">
-          <%= link_to "首页", root_path, class: "text-gray-700 hover:text-blue-600 font-medium transition" %>
-          <%= link_to "产品", products_path, class: "text-gray-700 hover:text-blue-600 font-medium transition" %>
-          <%= link_to "服务", "#", class: "text-gray-700 hover:text-blue-600 font-medium transition" %>
-          <%= link_to "关于", "#", class: "text-gray-700 hover:text-blue-600 font-medium transition" %>
+          <%= link_to "Home", root_path, class: "text-gray-700 hover:text-blue-600 font-medium transition" %>
+          <%= link_to "Products", products_path, class: "text-gray-700 hover:text-blue-600 font-medium transition" %>
+          <%= link_to "Services", "#", class: "text-gray-700 hover:text-blue-600 font-medium transition" %>
+          <%= link_to "About", "#", class: "text-gray-700 hover:text-blue-600 font-medium transition" %>
           <% if user_signed_in? && current_user.admin? %>
-            <%= link_to "管理后台", admin_root_path, class: "text-purple-600 hover:text-purple-800 font-semibold transition" %>
+            <%= link_to "Admin Panel", admin_root_path, class: "text-purple-600 hover:text-purple-800 font-semibold transition" %>
           <% end %>
         </div>
       </div>
@@ -34,10 +34,10 @@
         
         <% if user_signed_in? %>
           <% if current_user.admin? %>
-            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2 py-1 rounded">管理员</span>
+            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2 py-1 rounded">Admin</span>
           <% end %>
-          <span class="text-gray-600">欢迎, <%= current_user.email %></span>
-          <%= link_to "退出", destroy_user_session_path, data: { turbo_method: :delete }, 
+          <span class="text-gray-600">Welcome, <%= current_user.email %></span>
+          <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete }, 
               class: "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition" %>
         <% end %>
       </div>
@@ -55,12 +55,12 @@
     <!-- 移动端菜单 -->
     <div class="hidden md:hidden pb-4" id="mobile-menu">
       <div class="flex flex-col space-y-2">
-        <%= link_to "首页", root_path, class: "text-gray-700 hover:text-blue-600 py-2" %>
-        <%= link_to "产品", products_path, class: "text-gray-700 hover:text-blue-600 py-2" %>
-        <%= link_to "服务", "#", class: "text-gray-700 hover:text-blue-600 py-2" %>
-        <%= link_to "关于", "#", class: "text-gray-700 hover:text-blue-600 py-2" %>
+        <%= link_to "Home", root_path, class: "text-gray-700 hover:text-blue-600 py-2" %>
+        <%= link_to "Products", products_path, class: "text-gray-700 hover:text-blue-600 py-2" %>
+        <%= link_to "Services", "#", class: "text-gray-700 hover:text-blue-600 py-2" %>
+        <%= link_to "About", "#", class: "text-gray-700 hover:text-blue-600 py-2" %>
         <% if user_signed_in? && current_user.admin? %>
-          <%= link_to "管理后台", admin_root_path, class: "text-purple-600 hover:text-purple-800 font-semibold py-2" %>
+          <%= link_to "Admin Panel", admin_root_path, class: "text-purple-600 hover:text-purple-800 font-semibold py-2" %>
         <% end %>
       </div>
     </div>

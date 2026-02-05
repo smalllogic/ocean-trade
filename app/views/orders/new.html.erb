@@ -1,7 +1,7 @@
 <div class="w-full max-w-6xl mx-auto">
   <div class="mb-8">
-    <h1 class="text-4xl font-bold text-gray-900 mb-2">确认订单</h1>
-    <p class="text-gray-600">请填写您的联系信息和配送地址</p>
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">Confirm Order</h1>
+    <p class="text-gray-600">Please fill in your contact information and shipping address</p>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -11,24 +11,24 @@
         <%= simple_form_for @order, url: orders_path, method: :post do |f| %>
           <!-- 联系人信息 -->
           <div class="mb-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">联系人信息</h2>
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Contact Information</h2>
             
             <div class="space-y-4">
               <%= f.input :name, 
-                  label: "姓名", 
-                  placeholder: "请输入收货人姓名",
+                  label: "Full Name", 
+                  placeholder: "Enter recipient's name",
                   input_html: { class: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" },
                   wrapper_html: { class: "mb-4" } %>
               
               <%= f.input :email, 
-                  label: "邮箱", 
+                  label: "Email", 
                   placeholder: "your@email.com",
                   input_html: { class: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" },
                   wrapper_html: { class: "mb-4" } %>
               
               <%= f.input :phone, 
-                  label: "手机号码", 
-                  placeholder: "请输入11位手机号",
+                  label: "Phone Number", 
+                  placeholder: "Enter your phone number",
                   input_html: { class: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" },
                   wrapper_html: { class: "mb-4" } %>
             </div>
@@ -36,12 +36,12 @@
 
           <!-- 配送地址 -->
           <div class="mb-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">配送地址</h2>
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Shipping Address</h2>
             
             <%= f.input :address, 
                 as: :text,
-                label: "详细地址", 
-                placeholder: "省市区/县 + 详细街道地址",
+                label: "Detailed Address", 
+                placeholder: "Province/City/District + Street Address",
                 input_html: { 
                   rows: 4,
                   class: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" 
@@ -51,8 +51,8 @@
 
           <!-- 提交按钮 -->
           <div class="flex items-center justify-between pt-6 border-t">
-            <%= link_to "返回购物车", cart_path, class: "text-gray-600 hover:text-gray-900" %>
-            <%= f.button :submit, "提交订单", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors" %>
+            <%= link_to "Back to Cart", cart_path, class: "text-gray-600 hover:text-gray-900" %>
+            <%= f.button :submit, "Place Order", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors" %>
           </div>
         <% end %>
       </div>
@@ -61,8 +61,7 @@
     <!-- 右侧：订单摘要 -->
     <div class="lg:col-span-1">
       <div class="bg-white rounded-lg shadow-lg p-6 sticky top-20">
-        <h2 class="text-xl font-bold text-gray-900 mb-4">订单摘要</h2>
-        
+          <h2 class="text-xl font-bold text-gray-900 mb-4">Order Summary</h2>
         <!-- 商品列表 -->
         <div class="space-y-3 mb-4 max-h-64 overflow-y-auto">
           <% @cart.cart_items.includes(:product).each do |cart_item| %>
@@ -71,7 +70,7 @@
                 <%= image_tag cart_item.product.image, class: "h-16 w-16 object-cover rounded" %>
               <% else %>
                 <div class="h-16 w-16 bg-gray-200 rounded flex items-center justify-center">
-                  <span class="text-gray-400 text-xs">无图</span>
+                  <span class="text-gray-400 text-xs">No Image</span>
                 </div>
               <% end %>
               
@@ -92,19 +91,19 @@
         <!-- 费用明细 -->
         <div class="space-y-2 mb-4">
           <div class="flex justify-between text-gray-600 text-sm">
-            <span>商品总计</span>
+            <span>Subtotal</span>
             <span>¥<%= number_to_currency(@cart.total_price, unit: "", precision: 2) %></span>
           </div>
           <div class="flex justify-between text-gray-600 text-sm">
-            <span>运费</span>
-            <span>免运费</span>
+            <span>Shipping</span>
+            <span>Free Shipping</span>
           </div>
         </div>
 
         <!-- 总价 -->
         <div class="border-t pt-4">
           <div class="flex justify-between items-center">
-            <span class="text-lg font-semibold text-gray-900">订单总计</span>
+            <span class="text-lg font-semibold text-gray-900">Order Total</span>
             <span class="text-2xl font-bold text-blue-600">
               ¥<%= number_to_currency(@cart.total_price, unit: "", precision: 2) %>
             </span>
@@ -116,7 +115,7 @@
             <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
             </svg>
-            提交订单后，我们将尽快为您安排发货
+            After submitting, we will arrange shipping as soon as possible
           </p>
         </div>
       </div>

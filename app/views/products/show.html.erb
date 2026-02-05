@@ -5,7 +5,7 @@
       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
       </svg>
-      返回产品列表
+      Back to Products
     <% end %>
   </div>
 
@@ -19,7 +19,7 @@
               alt: @product.name %>
         <% else %>
           <div class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
-            <span class="text-gray-400 text-2xl">无产品图片</span>
+            <span class="text-gray-400 text-2xl">No Product Image</span>
           </div>
         <% end %>
       </div>
@@ -43,13 +43,13 @@
 
         <!-- 产品描述 -->
         <div class="mb-8">
-          <h2 class="text-xl font-semibold text-gray-900 mb-3">产品描述</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-3">Product Description</h2>
           <% if @product.description.present? %>
             <div class="text-gray-700 leading-relaxed whitespace-pre-wrap">
               <%= @product.description %>
             </div>
           <% else %>
-            <p class="text-gray-400 italic">暂无详细描述</p>
+            <p class="text-gray-400 italic">No description available</p>
           <% end %>
         </div>
 
@@ -59,21 +59,21 @@
             <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
             </svg>
-            <span>加入购物车</span>
+            <span>Add to Cart</span>
           <% end %>
         </div>
 
         <!-- 产品信息 -->
         <div class="mt-8 pt-6 border-t border-gray-200">
-          <h3 class="text-sm font-semibold text-gray-500 uppercase mb-3">产品信息</h3>
+          <h3 class="text-sm font-semibold text-gray-500 uppercase mb-3">Product Information</h3>
           <dl class="space-y-2">
             <div class="flex justify-between text-sm">
-              <dt class="text-gray-600">产品编号</dt>
+              <dt class="text-gray-600">Product ID</dt>
               <dd class="text-gray-900 font-medium">#<%= @product.id %></dd>
             </div>
             <div class="flex justify-between text-sm">
-              <dt class="text-gray-600">上架时间</dt>
-              <dd class="text-gray-900 font-medium"><%= @product.created_at.strftime("%Y年%m月%d日") %></dd>
+              <dt class="text-gray-600">Listed Date</dt>
+              <dd class="text-gray-900 font-medium"><%= @product.created_at.strftime("%B %d, %Y") %></dd>
             </div>
           </dl>
         </div>
@@ -83,7 +83,7 @@
 
   <!-- 相关产品推荐（可选） -->
   <div class="mt-12">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">推荐产品</h2>
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Recommended Products</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
       <% Product.visible.where.not(id: @product.id).limit(4).each do |related_product| %>
         <%= link_to product_path(related_product), class: "group" do %>
@@ -95,7 +95,7 @@
                     alt: related_product.name %>
               <% else %>
                 <div class="w-full h-full flex items-center justify-center">
-                  <span class="text-gray-400">无图片</span>
+                  <span class="text-gray-400">No Image</span>
                 </div>
               <% end %>
             </div>

@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
   
   def add_to_cart
     current_cart.add_product_to_cart(@product)
-    redirect_to product_path(@product), notice: "#{@product.name} 已加入购物车"
+    redirect_to product_path(@product), notice: "#{@product.name} has been added to cart"
   end
   
   private

@@ -16,7 +16,7 @@ class Admin::ProductsController < Admin::BaseController
     @product = Product.new(product_params)
     
     if @product.save
-      redirect_to admin_product_path(@product), notice: "产品创建成功"
+      redirect_to admin_product_path(@product), notice: "Product created successfully"
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Admin::ProductsController < Admin::BaseController
   
   def update
     if @product.update(product_params)
-      redirect_to admin_product_path(@product), notice: "产品更新成功"
+      redirect_to admin_product_path(@product), notice: "Product updated successfully"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class Admin::ProductsController < Admin::BaseController
   
   def destroy
     @product.destroy
-    redirect_to admin_products_path, notice: "产品已删除"
+    redirect_to admin_products_path, notice: "Product deleted successfully"
   end
   
   private
