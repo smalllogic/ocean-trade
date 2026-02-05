@@ -16,7 +16,12 @@ Rails.application.routes.draw do
   end
   
   # Shopping cart
-  resource :cart, only: [:show]
+  resource :cart, only: [:show] do
+    post 'add_item/:product_id', to: 'carts#add_item', as: :add_item
+    patch 'increase_quantity/:id', to: 'carts#increase_quantity', as: :increase_quantity
+    patch 'decrease_quantity/:id', to: 'carts#decrease_quantity', as: :decrease_quantity
+    delete 'remove_item/:id', to: 'carts#remove_item', as: :remove_item
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

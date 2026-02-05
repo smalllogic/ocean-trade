@@ -1,0 +1,24 @@
+/* Cart page styles */
+
+/* Make button_to forms inline */
+.cart-quantity-controls form {
+  display: inline;
+}
+
+.cart-quantity-controls form button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.25rem 0.75rem;
+}
+
+.cart-delete-button form {
+  display: inline;
+}
+
+.cart-delete-button form button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}

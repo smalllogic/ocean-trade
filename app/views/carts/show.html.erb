@@ -32,14 +32,16 @@
                     <p class="text-sm text-gray-500 mt-1">单价: ¥<%= number_to_currency(cart_item.product.price, unit: "", precision: 2) %></p>
                     
                     <!-- 数量控制 -->
-                    <div class="mt-3 flex items-center space-x-3">
+                    <div class="mt-3 flex items-center space-x-3 cart-quantity-controls">
                       <span class="text-sm text-gray-600">数量:</span>
                       <div class="flex items-center border border-gray-300 rounded">
-                        <button class="px-3 py-1 hover:bg-gray-100 text-gray-600">-</button>
+                        <%= button_to "-", decrease_quantity_cart_path(cart_item.id), method: :patch, class: "px-3 py-1 hover:bg-gray-100 text-gray-600", form: { data: { turbo_confirm: cart_item.quantity == 1 ? "数量为1时减少将删除该商品，确定吗？" : nil } } %>
                         <span class="px-4 py-1 border-x border-gray-300"><%= cart_item.quantity %></span>
-                        <button class="px-3 py-1 hover:bg-gray-100 text-gray-600">+</button>
+                        <%= button_to "+", increase_quantity_cart_path(cart_item.id), method: :patch, class: "px-3 py-1 hover:bg-gray-100 text-gray-600" %>
                       </div>
-                      <button class="text-red-600 hover:text-red-800 text-sm">删除</button>
+                      <div class="cart-delete-button">
+                        <%= button_to "删除", remove_item_cart_path(cart_item.id), method: :delete, class: "text-red-600 hover:text-red-800 text-sm", data: { turbo_confirm: "确定要删除这个商品吗？" } %>
+                      </div>
                     </div>
                   </div>
 
