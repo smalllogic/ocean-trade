@@ -12,7 +12,7 @@ class Admin::CategoriesController < Admin::BaseController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to admin_categories_path, notice: "分类创建成功"
+      redirect_to admin_categories_path, notice: "Category created successfully"
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class Admin::CategoriesController < Admin::BaseController
 
   def update
     if @category.update(category_params)
-      redirect_to admin_categories_path, notice: "分类更新成功"
+      redirect_to admin_categories_path, notice: "Category updated successfully"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -31,12 +31,12 @@ class Admin::CategoriesController < Admin::BaseController
 
   def destroy
     if @category.children.any?
-      redirect_to admin_categories_path, alert: "请先删除子分类"
+      redirect_to admin_categories_path, alert: "Please delete subcategories first"
     elsif @category.products.any?
-      redirect_to admin_categories_path, alert: "该分类下仍有产品，无法删除"
+      redirect_to admin_categories_path, alert: "This category has products and cannot be deleted"
     else
       @category.destroy
-      redirect_to admin_categories_path, notice: "分类已删除"
+      redirect_to admin_categories_path, notice: "Category deleted"
     end
   end
 

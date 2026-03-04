@@ -5,9 +5,9 @@ class Category < ApplicationRecord
 
   validates :name, presence: true
 
-  # 业务约束 2: Category 的 parent 若已有 product 则不允许再添加 children
+  # Business constraint 2: A category's parent cannot have children if it already has products
   validate :no_children_if_has_products
-  # 业务约束 (延伸): 如果已有子分类，不允许直接挂载产品 (在 Product 模型中校验更直接，但这里也加一个保护)
+  # Business constraint (extended): If a category has children, it cannot have products directly
   validate :no_products_if_has_children
 
   def leaf?
@@ -51,22 +51,22 @@ class Category < ApplicationRecord
 
   def no_children_if_has_products
     if children.any? && products.any?
-      errors.add(:base, "该分类下已有产品，不能添加子分类")
+      errors.add(:base, "This category already has products and cannot add subcategories")
     end
   end
 
   def no_products_if_has_children
     if products.any? && children.any?
-      errors.add(:base, "该分类已有子分类，不能直接添加产品")
+      errors.add(:base, "This category already has subcategories and cannot add products directly")
     end
   end
 
-  # 额外保护：在保存 parent 时检查 parent 是否已有产品
+  # Extra protection: Check if parent already has products when saving parent
   validate :parent_must_not_have_products
 
   def parent_must_not_have_products
     if parent.present? && parent.products.any?
-      errors.add(:parent_id, "上级分类已有产品，不能作为父分类")
+      errors.add(:parent_id, "Parent category already has products and cannot be used as a parent")
     end
   end
 end
