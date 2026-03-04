@@ -1,150 +1,270 @@
-<!-- Hero Carousel Section -->
-<div class="relative w-full h-[600px] overflow-hidden bg-gray-900" data-controller="carousel">
-  <!-- Carousel Slides -->
-  <div class="relative h-full">
-    <!-- Slide 1 -->
-    <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100" data-carousel-target="slide">
-      <%= image_tag "banner1.jpg", class: "w-full h-full object-cover", alt: "Banner 1" %>
-      <div class="absolute inset-0 bg-black/30">
-        <div class="w-full h-full flex items-center px-6">
-          <div class="max-w-2xl text-white">
-            <h1 class="text-6xl font-bold mb-6 leading-tight drop-shadow-lg">Discover Your Style</h1>
-            <p class="text-xl mb-8 text-white/90 drop-shadow">Elevate your wardrobe with our curated collection of premium fashion pieces</p>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- Luxury Hero Section -->
+<section class="relative h-[80vh] min-h-[600px] w-full flex items-center justify-center overflow-hidden bg-gray-900">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-black/40 z-10"></div>
+    <%= image_tag "banner1.png", class: "w-full h-full object-cover object-center transform scale-105 transition-transform duration-[10000ms] ease-out", id: "hero-zoom", alt: "Fandisha Luxury Hair" %>
+  </div>
+  
+  <div class="relative z-20 text-center px-6 max-w-4xl reveal">
+    <h2 class="text-emerald-500 uppercase tracking-[0.3em] font-bold text-sm mb-4">Welcome to Fandisha</h2>
+    <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+      FANDISHA’S BUNDLES
+    </h1>
+    <p class="text-xl md:text-2xl text-white/90 font-light italic mb-10 tracking-wide">
+      Where Luxury Meets Timeless Beauty
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <%= link_to "Shop the Collection", products_path, class: "px-10 py-4 bg-white text-gray-900 font-bold rounded-full hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-xl hover:scale-105 active:scale-95" %>
 
-    <!-- Slide 2 -->
-    <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0" data-carousel-target="slide">
-      <%= image_tag "banner2.jpg", class: "w-full h-full object-cover", alt: "Banner 2" %>
-      <div class="absolute inset-0 bg-black/30">
-        <div class="w-full h-full flex items-center px-6">
-          <div class="max-w-2xl text-white">
-            <h1 class="text-6xl font-bold mb-6 leading-tight drop-shadow-lg">New Arrivals</h1>
-            <p class="text-xl mb-8 text-white/90 drop-shadow">Fresh styles just landed. Be the first to explore our latest collection</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 3 -->
-    <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0" data-carousel-target="slide">
-      <%= image_tag "banner3.jpg", class: "w-full h-full object-cover", alt: "Banner 3" %>
-      <div class="absolute inset-0 bg-black/30">
-        <div class="w-full h-full flex items-center px-6">
-          <div class="max-w-2xl text-white">
-            <h1 class="text-6xl font-bold mb-6 leading-tight drop-shadow-lg">Limited Edition</h1>
-            <p class="text-xl mb-8 text-white/90 drop-shadow">Exclusive pieces that make a statement. Shop before they're gone</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
-
-  <!-- Navigation Arrows -->
-  <button data-action="click->carousel#previous" class="absolute left-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-4 rounded-full transition duration-300 z-10">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+  
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+    <svg class="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7-7-7m14-8l-7 7-7-7"></path>
     </svg>
-  </button>
-  <button data-action="click->carousel#next" class="absolute right-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-4 rounded-full transition duration-300 z-10">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-    </svg>
-  </button>
-
-  <!-- Indicators -->
-  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
-    <button data-action="click->carousel#goToSlide" data-slide-index="0" class="carousel-indicator w-3 h-3 rounded-full bg-white transition duration-300"></button>
-    <button data-action="click->carousel#goToSlide" data-slide-index="1" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 transition duration-300"></button>
-    <button data-action="click->carousel#goToSlide" data-slide-index="2" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 transition duration-300"></button>
   </div>
-</div>
+</section>
 
-<!-- Features Section -->
-<section class="py-20 bg-white">
-  <div class="w-full px-6">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-      <div class="text-center">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-full mb-6">
-          <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-          </svg>
+<!-- Brand philosophy -->
+<section class="py-24 bg-white relative overflow-hidden">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 leading-tight">
+          True Elegance is in the Details
+        </h2>
+        <div class="space-y-6 text-lg text-gray-600 leading-relaxed">
+          <p>
+            Welcome to FANDISHA’S BUNDLES, the destination for women who understand that true elegance is in the details.
+          </p>
+          <p>
+            We specialise in 100% premium human hair extensions curated for the modern, sophisticated woman — the woman who values quality, presence, and effortless glamour.
+          </p>
         </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">Free Shipping</h3>
-        <p class="text-gray-600">On all orders over $50. Fast and reliable delivery worldwide</p>
+        
+        <div class="mt-10 grid grid-cols-2 gap-6">
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-500 mt-1">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            </span>
+            <span class="font-bold text-gray-900">Thick from root to tip</span>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-500 mt-1">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            </span>
+            <span class="font-bold text-gray-900">Silky, soft, naturally lustrous</span>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-500 mt-1">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            </span>
+            <span class="font-bold text-gray-900">Long-lasting and reusable</span>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-500 mt-1">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            </span>
+            <span class="font-bold text-gray-900">Crafted for seamless blending</span>
+          </div>
+        </div>
       </div>
-      <div class="text-center">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-rose-100 rounded-full mb-6">
-          <svg class="w-8 h-8 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-          </svg>
+      
+      <div class="relative reveal reveal-delay-2">
+        <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+          <%= image_tag "pic1.png", class: "w-full h-full object-cover" %>
         </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">Secure Payment</h3>
-        <p class="text-gray-600">Your payment information is processed securely</p>
-      </div>
-      <div class="text-center">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-6">
-          <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-          </svg>
+        <div class="absolute -bottom-10 -left-10 bg-gray-900 p-8 rounded-2xl shadow-xl hidden md:block">
+          <p class="text-white text-lg italic font-light leading-relaxed">
+            "Every strand is selected with precision<br>to ensure fullness and a flawless finish."
+          </p>
         </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">Easy Returns</h3>
-        <p class="text-gray-600">30-day return policy. No questions asked</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Categories Section -->
-<section class="py-20 bg-gray-50">
-  <div class="w-full px-6">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 mb-4">Shop by Category</h2>
-      <p class="text-xl text-gray-600">Find exactly what you're looking for</p>
+<!-- Collection Showcase -->
+<section class="py-24 bg-stone-50">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Signature Collections</h2>
+      <div class="h-1 w-20 bg-emerald-500 mx-auto rounded-full mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto italic">Designed to complement your lifestyle — from boardroom meetings to private dinners.</p>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <%= link_to products_path, class: "group relative overflow-hidden rounded-2xl h-80 bg-gradient-to-br from-purple-400 to-pink-400 hover:shadow-2xl transition duration-300 transform hover:scale-105" do %>
-        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition duration-300"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <h3 class="text-3xl font-bold text-white">Women's</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <!-- Body Wave -->
+      <div class="group reveal">
+        <div class="relative aspect-square rounded-2xl overflow-hidden mb-6 shadow-lg bg-gray-200">
+           <%# 尝试查找对应的分类图片，如果没有则用 banner3 %>
+           <%= image_tag "pic3.png", class: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" %>
+           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+             <%= link_to "View Collection →", products_path, class: "text-white font-bold text-lg" %>
+           </div>
         </div>
-      <% end %>
-      
-      <%= link_to products_path, class: "group relative overflow-hidden rounded-2xl h-80 bg-gradient-to-br from-blue-400 to-cyan-400 hover:shadow-2xl transition duration-300 transform hover:scale-105" do %>
-        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition duration-300"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <h3 class="text-3xl font-bold text-white">Men's</h3>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">Signature Body Wave – Soft Glamour</h3>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          Our Signature Body Wave Bundles embody timeless luxury. With soft, flowing waves and natural fullness, this texture delivers effortless glamour without compromising sophistication. Lightweight yet full, these bundles hold their pattern beautifully.
+        </p>
+      </div>
+
+      <!-- Deep Wave -->
+      <div class="group reveal reveal-delay-2">
+        <div class="relative aspect-square rounded-2xl overflow-hidden mb-6 shadow-lg bg-gray-200">
+           <%= image_tag "banner1.png", class: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" %>
+           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+             <%= link_to "View Collection →", products_path, class: "text-white font-bold text-lg" %>
+           </div>
         </div>
-      <% end %>
-      
-      <%= link_to products_path, class: "group relative overflow-hidden rounded-2xl h-80 bg-gradient-to-br from-orange-400 to-red-400 hover:shadow-2xl transition duration-300 transform hover:scale-105" do %>
-        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition duration-300"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <h3 class="text-3xl font-bold text-white">Accessories</h3>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">👑 Royal Deep Wave – Bold Elegance</h3>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          Defined. Voluminous. Unapologetically luxurious. Our Royal Deep Wave Bundles are designed for women who embrace presence and power. Featuring rich, defined curls with exceptional density, this texture delivers statement beauty while maintaining softness.
+        </p>
+      </div>
+
+      <!-- Fumi Hair -->
+      <div class="group reveal">
+        <div class="relative aspect-square rounded-2xl overflow-hidden mb-6 shadow-lg bg-gray-200">
+           <%= image_tag "banner1-2.png", class: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" %>
+           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+             <%= link_to "View Collection →", products_path, class: "text-white font-bold text-lg" %>
+           </div>
         </div>
-      <% end %>
-      
-      <%= link_to products_path, class: "group relative overflow-hidden rounded-2xl h-80 bg-gradient-to-br from-green-400 to-teal-400 hover:shadow-2xl transition duration-300 transform hover:scale-105" do %>
-        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition duration-300"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <h3 class="text-3xl font-bold text-white">Sale</h3>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">FUMI HAIR BUNDLES – Precision Styling</h3>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          Experience the art of precision styling with our Fumi Hair. Known for its signature layered bounce and voluminous finish, this texture delivers salon-quality glamour with minimal effort. Expertly designed to create that iconic full-bodied look.
+        </p>
+      </div>
+
+      <!-- Pixie -->
+      <div class="group reveal reveal-delay-2">
+        <div class="relative aspect-square rounded-2xl overflow-hidden mb-6 shadow-lg bg-gray-200">
+           <%= image_tag "pic3.png", class: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" %>
+           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+             <%= link_to "View Collection →", products_path, class: "text-white font-bold text-lg" %>
+           </div>
         </div>
-      <% end %>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">Pixie Collection – Refined Elegance</h3>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          The Pixie Collection is perfect for refined everyday elegance, executive presence, and evening sophistication. Whether worn sleek and sculpted or softly styled, this look commands attention in the most graceful way.
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CTA Section -->
-<section class="py-20 bg-gradient-to-r from-indigo-600 to-purple-600">
-  <div class="w-full px-6 text-center">
-    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Join Our Newsletter</h2>
-    <p class="text-xl text-indigo-100 mb-10 max-w-2xl mx-auto">Get exclusive access to new arrivals, special offers, and style tips</p>
-    <div class="max-w-md mx-auto flex gap-4">
-      <input type="email" placeholder="Enter your email" class="flex-1 px-6 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-4 focus:ring-white/50">
-      <button class="bg-white text-indigo-600 font-bold px-8 py-4 rounded-full hover:bg-indigo-50 transition duration-300 shadow-lg">Subscribe</button>
+<!-- Standards Quote -->
+<section class="py-32 bg-gray-900 text-center relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+  </div>
+  <div class="container mx-auto px-6 relative z-10 reveal">
+    <p class="text-emerald-500 font-bold tracking-[0.2em] mb-8 uppercase text-sm">Our Philosophy</p>
+    <blockquote class="text-3xl md:text-5xl font-extrabold text-white mb-10 leading-tight tracking-tight">
+      "At FANDISHA’S BUNDLES, we don’t follow trends — we define standards. Because true luxury is effortless."
+    </blockquote>
+    <div class="h-1 w-20 bg-emerald-500 mx-auto rounded-full"></div>
+  </div>
+</section>
+
+<!-- Guidelines -->
+<section class="py-24 bg-white">
+  <div class="container mx-auto px-6">
+    <div class="max-w-4xl mx-auto bg-stone-50 rounded-[2rem] p-10 md:p-16 border border-stone-200 shadow-sm reveal">
+      <div class="flex items-center mb-10">
+        <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mr-4">
+          <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Colouring Guidelines</h2>
+      </div>
+      
+      <p class="text-gray-600 mb-8 leading-relaxed">
+        Our bundles can be coloured; however, to maintain the luxury quality of your hair, please follow these guidelines:
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+        <div class="flex items-start">
+          <div class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-4"></div>
+          <p class="text-gray-800 font-medium">Professional colouring is strongly recommended</p>
+        </div>
+        <div class="flex items-start">
+          <div class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-4"></div>
+          <p class="text-gray-800 font-medium">Perform a strand test before full application</p>
+        </div>
+        <div class="flex items-start">
+          <div class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-4"></div>
+          <p class="text-gray-800 font-medium">Avoid over-processing the hair</p>
+        </div>
+        <div class="flex items-start">
+          <div class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-4"></div>
+          <p class="text-gray-800 font-medium">Deep condition after colouring</p>
+        </div>
+      </div>
+      
+      <div class="bg-amber-50 border-l-4 border-amber-400 p-6 rounded-r-xl">
+        <p class="text-amber-900 text-sm leading-relaxed italic">
+          <strong>Note:</strong> Improper colouring may affect hair quality and exchange eligibility. We recommend indulgence with responsibility.
+        </p>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- Final CTA -->
+<section class="py-24 bg-stone-50 text-center">
+  <div class="container mx-auto px-6 reveal">
+    <h2 class="text-4xl font-extrabold text-gray-900 mb-6 tracking-tight">Indulge in Excellence</h2>
+    <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto italic font-light">
+      Because luxury is not about excess. It’s about excellence. Indulge in hair that reflects your standard.
+    </p>
+    <%= link_to "Explore the Full Collection", products_path, class: "inline-block px-12 py-5 bg-gray-900 text-white font-bold rounded-full hover:bg-emerald-600 transition-all duration-300 shadow-2xl hover:scale-105 active:scale-95" %>
+  </div>
+</section>
+
+<style>
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-2 { transition-delay: 200ms; }
+  
+  #hero-zoom { animation: slow-zoom 20s infinite alternate linear; }
+  @keyframes slow-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.15); }
+  }
+</style>
+
+<script>
+  (function(){
+    let io = null;
+    function init(){
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window){
+        io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{ 
+            if(e.isIntersecting){ 
+              e.target.classList.add('revealed'); 
+              io.unobserve(e.target); 
+            } 
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(el=> io.observe(el));
+      } else {
+        reveals.forEach(el=> el.classList.add('revealed'));
+      }
+    }
+    
+    function cleanup(){
+      if (io){ io.disconnect(); io = null; }
+      document.querySelectorAll('.reveal').forEach(el=> el.classList.add('revealed'));
+    }
+    
+    document.addEventListener('turbo:load', init);
+    document.addEventListener('turbo:render', init);
+    document.addEventListener('turbo:before-cache', cleanup);
+  })();
+</script>

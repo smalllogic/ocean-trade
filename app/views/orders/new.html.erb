@@ -9,6 +9,7 @@
     <div class="lg:col-span-2">
       <div class="bg-white rounded-lg shadow-lg p-8">
         <%= simple_form_for @order, url: orders_path, method: :post do |f| %>
+          <%= f.error_notification message: "Please correct the following errors and try again:" if f.object.errors.any? %>
           <!-- 联系人信息 -->
           <div class="mb-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Contact Information</h2>
@@ -52,7 +53,7 @@
           <!-- 提交按钮 -->
           <div class="flex items-center justify-between pt-6 border-t">
             <%= link_to "Back to Cart", cart_path, class: "text-gray-600 hover:text-gray-900" %>
-            <%= f.button :submit, "Place Order", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors" %>
+            <%= f.button :submit, "Place Order", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors", data: { turbo: false } %>
           </div>
         <% end %>
       </div>
@@ -64,10 +65,12 @@
           <h2 class="text-xl font-bold text-gray-900 mb-4">Order Summary</h2>
         <!-- 商品列表 -->
         <div class="space-y-3 mb-4 max-h-64 overflow-y-auto">
-          <% @cart.cart_items.includes(:product).each do |cart_item| %>
+          <% @cart.cart_items.includes(product_variant: :product).each do |cart_item| %>
+            <% variant = cart_item.product_variant %>
+            <% product = variant.product %>
             <div class="flex items-center space-x-3 pb-3 border-b border-gray-200">
-              <% if cart_item.product.image.attached? %>
-                <%= image_tag cart_item.product.image, class: "h-16 w-16 object-cover rounded" %>
+              <% if product.images.attached? %>
+                <%= image_tag product.images.first, class: "h-16 w-16 object-cover rounded" %>
               <% else %>
                 <div class="h-16 w-16 bg-gray-200 rounded flex items-center justify-center">
                   <span class="text-gray-400 text-xs">No Image</span>
@@ -75,9 +78,10 @@
               <% end %>
               
               <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-gray-900 truncate"><%= cart_item.product.name %></p>
+                <p class="text-sm font-medium text-gray-900 truncate"><%= product.name %></p>
+                <p class="text-xs text-gray-600 truncate"><%= variant.title %></p>
                 <p class="text-xs text-gray-500">
-                  ¥<%= number_to_currency(cart_item.product.price, unit: "", precision: 2) %> × <%= cart_item.quantity %>
+                  ¥<%= number_to_currency(variant.price, unit: "", precision: 2) %> × <%= cart_item.quantity %>
                 </p>
               </div>
               

@@ -1,25 +1,126 @@
-<div class="w-full max-w-7xl mx-auto px-6">
-  <div class="mb-8">
-    <h1 class="text-4xl font-bold text-gray-900 mb-2">All Products</h1>
-    <p class="text-gray-600">Browse our curated collection</p>
+<!-- Parallax Hero with Flowing Gradient + Particles -->
+<section class="relative overflow-hidden h-[280px] md:h-[360px] w-full mb-8" id="parallax-hero">
+  <div class="absolute inset-0 pointer-events-none" id="gradient-bg"></div>
+  <canvas class="absolute inset-0 w-full h-full" id="particles-canvas"></canvas>
+  <div class="relative z-10 h-full flex items-center">
+    <div class="w-full max-w-7xl mx-auto px-6">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg tracking-tight">
+        Explore Our Collection
+      </h1>
+      <p class="mt-3 text-white/90 max-w-xl">Premium products curated for your style. Scroll to discover more.</p>
+    </div>
   </div>
+</section>
+
+<div class="w-full max-w-7xl mx-auto px-6">
+  <div class="mb-6">
+    <% if @current_category.present? %>
+      <h1 class="text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
+        <%= @current_category.path_from_root.first.name %>
+      </h1>
+      <div class="flex items-center text-sm text-gray-500 space-x-2">
+        <span class="flex items-center">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+          </svg>
+          正在浏览
+        </span>
+        <div class="flex items-center space-x-1">
+          <% @current_category.path_from_root.each_with_index do |path_cat, idx| %>
+            <span class="<%= idx == @current_category.path_from_root.size - 1 ? 'text-emerald-600 font-semibold' : '' %>">
+              <%= path_cat.name %>
+            </span>
+            <% if idx < @current_category.path_from_root.size - 1 %>
+              <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <h1 class="text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">All Products</h1>
+      <p class="text-gray-600">Browse our curated collection of premium products</p>
+    <% end %>
+  </div>
+
+  <%# 横向分类导航树 - 增强美观度与层次感 %>
+  <% if @nav_levels.present? %>
+    <% path_ids = (@current_category&.path_from_root || []).map(&:id) %>
+    <div class="mb-10 space-y-4 bg-stone-50 p-6 rounded-2xl border border-stone-200 shadow-sm">
+      <% @nav_levels.each_with_index do |cats, level_index| %>
+        <% next if cats.blank? %>
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- 层级指示标签 -->
+          <div class="flex items-center space-x-2 mr-2">
+            <span class="text-[10px] uppercase tracking-wider font-bold text-stone-600 bg-stone-200 px-2 py-0.5 rounded">
+              Level <%= level_index + 1 %>
+            </span>
+            <% if level_index > 0 %>
+              <svg class="w-4 h-4 text-stone-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            <% end %>
+          </div>
+
+          <!-- 分类按钮组 -->
+          <div class="flex flex-wrap items-center gap-2">
+            <% cats.each do |cat| %>
+              <% active = (path_ids.include?(cat.id)) %>
+              <%# 如果是当前选中的具体分类（路径中最后一个），赋予更明显的样式 %>
+              <% is_current = (@current_category&.id == cat.id) %>
+              
+              <% 
+                button_class = if is_current
+                  "bg-gray-900 text-white shadow-md ring-2 ring-stone-200"
+                elsif active
+                  "bg-stone-100 text-gray-900 border border-stone-300"
+                else
+                  "bg-white text-gray-600 border border-gray-200 hover:border-gray-400 hover:text-gray-900 hover:shadow-sm"
+                end
+              %>
+              
+              <%= link_to products_path(category_id: cat.id), 
+                  class: "group relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 #{button_class}" do %>
+                <div class="flex items-center">
+                  <span><%= cat.name %></span>
+                  <% if active %>
+                    <svg class="w-3.5 h-3.5 ml-1.5 opacity-70" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        
+        <%# 在层级之间添加细微的分隔线 %>
+        <% if level_index < @nav_levels.size - 1 && @nav_levels[level_index + 1].any? %>
+          <div class="h-px bg-gradient-to-r from-stone-200 to-transparent w-2/3 my-2"></div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 
   <% if @products.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <% @products.each do |product| %>
-        <%= link_to product_path(product), class: "group" do %>
-          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            <!-- 产品图片 -->
-            <div class="aspect-square bg-gray-200 overflow-hidden">
-              <% if product.image.attached? %>
-                <%= image_tag product.image, 
-                    class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300",
+      <% @products.each_with_index do |product, i| %>
+        <%= link_to product_path(product), class: "group reveal reveal-delay-#{(i % 6)}" do %>
+          <div class="card-3d bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-500 will-change-transform">
+            <!-- 产品图片：严格正方形 -->
+            <div class="aspect-square bg-gray-100 overflow-hidden relative">
+              <% if product.images.attached? %>
+                <%= image_tag product.images.first, 
+                    class: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105",
                     alt: product.name %>
               <% else %>
                 <div class="w-full h-full flex items-center justify-center">
                   <span class="text-gray-400 text-lg">No Image</span>
                 </div>
               <% end %>
+              <!-- 氛围高光 -->
+              <span class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background: radial-gradient(120px 120px at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.35), transparent 60%);"></span>
             </div>
             
             <!-- 产品信息 -->
@@ -35,8 +136,15 @@
               <% end %>
               
               <div class="flex items-center justify-between">
-                <span class="text-2xl font-bold text-blue-600">
-                  ¥<%= number_to_currency(product.price, unit: "", precision: 2) %>
+                <span class="text-xl font-bold text-blue-600">
+                  <% if product.variants.any? %>
+                    ¥<%= number_to_currency(product.min_price, unit: "", precision: 2) %>
+                    <% if product.min_price != product.max_price %>
+                      <span class="text-xs font-normal text-gray-400">+</span>
+                    <% end %>
+                  <% else %>
+                    ¥<%= number_to_currency(product.price, unit: "", precision: 2) %>
+                  <% end %>
                 </span>
                 <span class="text-sm text-blue-600 group-hover:underline">
                   View Details →
@@ -54,4 +162,117 @@
       <p class="text-gray-500">Stay tuned for amazing products coming soon</p>
     </div>
   <% end %>
+
+<!-- 动效样式（作用域在本页） -->
+<style>
+  /* 交错进入动画 */
+  .reveal { opacity: 0; transform: translateY(18px) scale(.98); }
+  .reveal.revealed { opacity: 1; transform: translateY(0) scale(1); transition: opacity .7s ease, transform .7s ease; }
+  <% (0..6).each do |d| %>
+  .reveal.reveal-delay-<%= d %> { transition-delay: <%= (d*60) %>ms; }
+  <% end %>
+
+  /* 卡片 3D 悬停（轻微倾斜 + 光影） */
+  .card-3d { transform-style: preserve-3d; }
+  .card-3d:hover { transform: translateY(-4px) rotateX(1.2deg) rotateY(.8deg); }
+
+  /* 顶部渐变（动态流动） */
+  #gradient-bg { background: linear-gradient(120deg, #0ea5e9, #6366f1, #a855f7); background-size: 200% 200%; animation: flow 10s ease infinite; }
+  @keyframes flow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+</style>
+
+<!-- 动效脚本（仅本页） -->
+<script>
+  // 使用 Turbo 生命周期，确保返回时重新初始化；在缓存前清理，避免“看不见但可点”的情况
+  (function(){
+    let io = null;
+    let rafId = null;
+    let resizeHandler = null;
+    let scrollHandler = null;
+    const cardHandlers = [];
+
+    function init(){
+      // 1) 交错进入：观察器（不支持时直接显示）
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window){
+        io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
+        }, { threshold: 0.12 });
+        reveals.forEach(el=> io.observe(el));
+      } else {
+        reveals.forEach(el=> el.classList.add('revealed'));
+      }
+
+      // 2) 卡片悬停“氛围高光”
+      document.querySelectorAll('.card-3d').forEach(card=>{
+        const handler = (e)=>{
+          const rect = card.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty('--mx', x + '%');
+          card.style.setProperty('--my', y + '%');
+        };
+        card.addEventListener('mousemove', handler);
+        cardHandlers.push({ card, handler });
+      });
+
+      // 3) 视差 Hero
+      const hero = document.getElementById('parallax-hero');
+      if (hero){
+        scrollHandler = ()=>{
+          const y = window.scrollY;
+          hero.style.transform = `translateY(${y * 0.12}px)`;
+        };
+        window.addEventListener('scroll', scrollHandler, { passive: true });
+        scrollHandler();
+      }
+
+      // 4) 粒子 Canvas（轻量）
+      const canvas = document.getElementById('particles-canvas');
+      if (canvas){
+        const ctx = canvas.getContext('2d');
+        const DPR = window.devicePixelRatio || 1;
+        const particles = Array.from({length: 60}).map(()=>({
+          x: Math.random(), y: Math.random(), r: Math.random()*2+0.5, vx: (Math.random()-0.5)*0.0006, vy: (Math.random()-0.5)*0.0006
+        }));
+        const resize = ()=>{ canvas.width = canvas.clientWidth * DPR; canvas.height = canvas.clientHeight * DPR; };
+        resize();
+        resizeHandler = resize;
+        window.addEventListener('resize', resizeHandler);
+        const loop = ()=>{
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          ctx.fillStyle = 'rgba(255,255,255,0.7)';
+          particles.forEach(p=>{
+            p.x += p.vx; p.y += p.vy; if(p.x<0||p.x>1) p.vx*=-1; if(p.y<0||p.y>1) p.vy*=-1;
+            ctx.beginPath(); ctx.arc(p.x*canvas.width, p.y*canvas.height, p.r*DPR, 0, Math.PI*2); ctx.fill();
+          });
+          rafId = requestAnimationFrame(loop);
+        };
+        rafId = requestAnimationFrame(loop);
+      }
+    }
+
+    function cleanup(){
+      // 在缓存前把 reveal 强制显示，避免返回后仍是 opacity:0
+      document.querySelectorAll('.reveal').forEach(el=> el.classList.add('revealed'));
+      // 取消观察
+      if (io){ io.disconnect(); io = null; }
+      // 解绑卡片鼠标事件
+      cardHandlers.forEach(({card, handler})=> card.removeEventListener('mousemove', handler));
+      cardHandlers.length = 0;
+      // 解绑滚动/重置 transform
+      const hero = document.getElementById('parallax-hero');
+      if (scrollHandler){ window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
+      if (hero){ hero.style.transform = ''; }
+      // 停止粒子动画与监听
+      if (rafId){ cancelAnimationFrame(rafId); rafId = null; }
+      if (resizeHandler){ window.removeEventListener('resize', resizeHandler); resizeHandler = null; }
+    }
+
+    document.addEventListener('turbo:load', init);
+    document.addEventListener('turbo:render', init);
+    document.addEventListener('turbo:before-cache', cleanup);
+  })();
+</script>
+
 </div>

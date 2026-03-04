@@ -135,3 +135,22 @@ input, textarea, select {
 input::placeholder, textarea::placeholder {
 	color: var(--text-300);
 }
+
+/* Error Styles for SimpleForm */
+.field_with_errors {
+  @apply text-red-600;
+}
+
+.field_with_errors input, 
+.field_with_errors textarea, 
+.field_with_errors select {
+  @apply border-red-500 focus:ring-red-500 !important;
+}
+
+.error {
+  @apply text-red-500 text-sm mt-1 block;
+}
+
+.error_notification {
+  @apply bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm;
+}

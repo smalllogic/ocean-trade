@@ -1,0 +1,144 @@
+<div class="w-full max-w-5xl mx-auto px-6 py-16">
+  <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+    <div class="bg-gray-900 px-8 py-16 text-center relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/20 to-stone-900/40 pointer-events-none"></div>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white relative z-10 tracking-tight">Contact Us</h1>
+      <p class="mt-4 text-white/70 relative z-10 max-w-2xl mx-auto italic font-light">We are here to help you elevate your luxury standards. Reach out to our team for any inquiries.</p>
+      <div class="mt-8 h-1 w-24 bg-emerald-500 mx-auto rounded-full relative z-10"></div>
+    </div>
+
+    <div class="p-8 md:p-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <!-- Contact Information -->
+        <div class="reveal">
+          <h2 class="text-3xl font-bold text-gray-900 mb-8 tracking-tight">Get in Touch</h2>
+          
+          <div class="space-y-8">
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mr-6 flex-shrink-0 shadow-sm">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Email</h3>
+                <p class="text-lg text-gray-900 font-semibold">support@fandisha.com</p>
+                <p class="text-sm text-gray-500 mt-1 italic">Response within 24-48 hours</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mr-6 flex-shrink-0 shadow-sm">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Business Hours</h3>
+                <p class="text-lg text-gray-900 font-semibold">Monday – Friday</p>
+                <p class="text-base text-gray-700">9:00 AM – 6:00 PM (GMT)</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mr-6 flex-shrink-0 shadow-sm">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Location</h3>
+                <p class="text-lg text-gray-900 font-semibold">Luxury Distribution Center</p>
+                <p class="text-base text-gray-700">Premium Hair Care HQ</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Proof/Quote -->
+          <div class="mt-12 p-8 bg-stone-50 rounded-3xl border border-stone-100">
+            <p class="text-gray-600 italic font-light leading-relaxed">
+              "We understand that your crown is your pride. Our concierge service is dedicated to ensuring your experience with Fandisha is as seamless as our blends."
+            </p>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="reveal reveal-delay-2">
+          <div class="bg-stone-50 p-8 rounded-3xl border border-stone-100 shadow-sm">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 tracking-tight">Send a Message</h2>
+            <%= form_with model: @inquiry, url: contact_us_path, class: "space-y-5" do |f| %>
+              <% if @inquiry.errors.any? %>
+                <div class="bg-red-50 text-red-600 p-4 rounded-xl text-sm mb-4">
+                  <p class="font-bold mb-1">Please correct the following errors:</p>
+                  <ul class="list-disc list-inside">
+                    <% @inquiry.errors.full_messages.each do |msg| %>
+                      <li><%= msg %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div>
+                <%= f.label :name, "Full Name", class: "block text-sm font-bold text-gray-700 mb-2" %>
+                <%= f.text_field :name, placeholder: "E.g. Jane Doe", class: "w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition outline-none" %>
+              </div>
+              <div>
+                <%= f.label :email, "Email Address", class: "block text-sm font-bold text-gray-700 mb-2" %>
+                <%= f.email_field :email, placeholder: "jane@example.com", class: "w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition outline-none" %>
+              </div>
+              <div>
+                <%= f.label :subject, "Subject", class: "block text-sm font-bold text-gray-700 mb-2" %>
+                <%= f.select :subject, ["Order Inquiry", "Product Question", "Wholesale Inquiry", "Other"], { prompt: "Select a subject" }, class: "w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition outline-none appearance-none" %>
+              </div>
+              <div>
+                <%= f.label :message, "Message", class: "block text-sm font-bold text-gray-700 mb-2" %>
+                <%= f.text_area :message, rows: 5, placeholder: "How can we help you?", class: "w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition outline-none resize-none" %>
+              </div>
+              <%= f.submit "Send Concierge Request", class: "w-full py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-emerald-600 transition shadow-lg active:scale-95 cursor-pointer" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 px-8 py-6 text-center border-t border-gray-100">
+      <%= link_to root_path, class: "text-gray-500 hover:text-gray-900 font-bold transition flex items-center justify-center group" do %>
+        <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back to Home
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-2 { transition-delay: 150ms; }
+</style>
+
+<script>
+  (function(){
+    let io = null;
+    function init(){
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window){
+        io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        reveals.forEach(el=> io.observe(el));
+      } else {
+        reveals.forEach(el=> el.classList.add('revealed'));
+      }
+    }
+    function cleanup(){
+      if (io){ io.disconnect(); io = null; }
+      document.querySelectorAll('.reveal').forEach(el=> el.classList.add('revealed'));
+    }
+    document.addEventListener('turbo:load', init);
+    document.addEventListener('turbo:render', init);
+    document.addEventListener('turbo:before-cache', cleanup);
+  })();
+</script>

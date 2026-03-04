@@ -1,0 +1,48 @@
+<div class="w-full max-w-4xl mx-auto">
+  <div class="mb-6 flex justify-between items-center">
+    <%= link_to "← Back to Inquiries", admin_inquiries_path, class: "text-blue-600 hover:text-blue-800" %>
+    <div class="flex space-x-2">
+      <%= link_to "Delete", admin_inquiry_path(@inquiry), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition" %>
+    </div>
+  </div>
+
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="p-8 border-b border-gray-100 bg-gray-50">
+      <div class="flex justify-between items-start">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2"><%= @inquiry.subject %></h1>
+          <p class="text-gray-500 text-sm">Received on <%= @inquiry.created_at.strftime("%B %d, %Y at %H:%M") %></p>
+        </div>
+        <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider <%= @inquiry.unread? ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800' %>">
+          <%= @inquiry.status %>
+        </span>
+      </div>
+    </div>
+
+    <div class="p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div>
+          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">From</h3>
+          <p class="text-lg font-bold text-gray-900"><%= @inquiry.name %></p>
+        </div>
+        <div>
+          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Email</h3>
+          <a href="mailto:<%= @inquiry.email %>" class="text-lg font-bold text-blue-600 hover:underline"><%= @inquiry.email %></a>
+        </div>
+      </div>
+
+      <div class="bg-stone-50 p-6 rounded-2xl border border-stone-100">
+        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Message</h3>
+        <div class="text-gray-800 leading-relaxed whitespace-pre-wrap">
+          <%= @inquiry.message %>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-8 py-6 bg-gray-50 border-t border-gray-100 flex justify-end">
+      <a href="mailto:<%= @inquiry.email %>?subject=Re: <%= @inquiry.subject %>" class="bg-gray-900 text-white font-bold py-3 px-8 rounded-xl hover:bg-emerald-600 transition shadow-lg">
+        Reply via Email
+      </a>
+    </div>
+  </div>
+</div>

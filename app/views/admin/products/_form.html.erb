@@ -9,6 +9,24 @@
       <%= f.input :name, label: false, placeholder: "Enter product name", input_html: { class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
     </div>
 
+    <!-- Category -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <%= f.label :category_id, "Category", class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <%= f.collection_select :category_id, Category.all.select(&:leaf?), :id, :name, { include_blank: "Select a Category" }, { class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
+      </div>
+      <div>
+        <%= f.label :product_type, "Product Type", class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <%= f.input :product_type, collection: [['Hair', 'hair'], ['Care', 'care']], label: false, include_blank: "Select Type", input_html: { class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div>
+      <%= f.label :summary, "Summary (Short description)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.input :summary, label: false, placeholder: "Enter a brief summary", input_html: { class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
+    </div>
+
     <!-- Price -->
     <div>
       <%= f.label :price, "Price", class: "block text-sm font-medium text-gray-700 mb-2" %>
@@ -22,19 +40,151 @@
       <%= f.input :description, label: false, as: :text, placeholder: "Enter product description", input_html: { rows: 6, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
     </div>
 
-    <!-- Product Image -->
-    <div>
-      <%= f.label :image, "Product Image", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <!-- Product Images -->
+    <div class="bg-gray-50 p-6 rounded-xl border-2 border-dashed border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-2">Product Images</h3>
+      <p class="text-sm text-gray-500 mb-4">Add images one by one or select multiple. Each image will be added to the collection.</p>
       
-      <% if product.image.attached? %>
-        <div class="mb-4">
-          <%= image_tag product.image, class: "rounded-lg shadow-md max-w-xs" %>
+      <% if product.images.attached? %>
+        <div class="mb-6">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Currently Uploaded:</p>
+          <div class="flex flex-wrap gap-4">
+            <% product.images.each do |image| %>
+              <div class="relative group">
+                <%= image_tag image, class: "rounded-lg shadow-md h-32 w-32 object-cover border border-gray-200" %>
+                <%= link_to remove_image_admin_product_path(product, image_id: image.id), 
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this image?" },
+                    class: "absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition shadow-lg" do %>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
       <% end %>
       
-      <%= f.input :image, label: false, as: :file, input_html: { accept: "image/*", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" } %>
-      <p class="mt-1 text-sm text-gray-500">Supports JPG, PNG, GIF formats</p>
+      <div id="image-inputs" class="space-y-3">
+        <div class="image-input-group flex items-center gap-3">
+          <div class="flex-grow">
+            <%= f.file_field :images, name: "product[images][]", accept: "image/*", 
+                class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer transition" 
+            %>
+          </div>
+          <button type="button" class="remove-image-input hidden text-red-500 hover:text-red-700">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" id="add-next-image" class="mt-4 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Upload Next Image
+      </button>
+      
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-500">
+        <div class="flex items-center">
+          <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Sequential Upload Supported
+        </div>
+        <div class="flex items-center">
+          <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Max 5MB per Image
+        </div>
+      </div>
     </div>
+
+    <!-- Variants -->
+    <div class="border-t pt-6">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold text-gray-900">Product Variants (SKUs)</h3>
+        <button type="button" id="add-variant" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+          + Add Variant
+        </button>
+      </div>
+
+      <div id="variants-fields" class="space-y-4">
+        <%= f.simple_fields_for :variants do |variant_form| %>
+          <%= render 'variant_fields', f: variant_form %>
+        <% end %>
+      </div>
+      
+      <!-- Template for new variants -->
+      <template id="variant-template">
+        <%= f.simple_fields_for :variants, ProductVariant.new, child_index: "NEW_RECORD" do |variant_form| %>
+          <%= render 'variant_fields', f: variant_form %>
+        <% end %>
+      </template>
+    </div>
+
+    <script>
+      document.addEventListener('turbo:load', function() {
+        // Variants dynamic logic
+        const variantsFields = document.getElementById('variants-fields');
+        const addVariantBtn = document.getElementById('add-variant');
+        const variantTemplate = document.getElementById('variant-template');
+
+        if (addVariantBtn && variantsFields && variantTemplate) {
+          addVariantBtn.addEventListener('click', function() {
+            const content = variantTemplate.innerHTML.replace(/NEW_RECORD/g, new Date().getTime().toString());
+            const div = document.createElement('div');
+            div.innerHTML = content;
+            variantsFields.appendChild(div.firstElementChild);
+          });
+        }
+        
+        // Image dynamic logic
+        const imageInputs = document.getElementById('image-inputs');
+        const addNextImageBtn = document.getElementById('add-next-image');
+
+        if (addNextImageBtn && imageInputs) {
+          addNextImageBtn.addEventListener('click', function() {
+            const firstGroup = imageInputs.querySelector('.image-input-group');
+            const newGroup = firstGroup.cloneNode(true);
+            
+            // Clear the file input
+            const fileInput = newGroup.querySelector('input[type="file"]');
+            fileInput.value = '';
+            
+            // Show the remove button for new rows
+            const removeBtn = newGroup.querySelector('.remove-image-input');
+            removeBtn.classList.remove('hidden');
+            
+            imageInputs.appendChild(newGroup);
+          });
+        }
+        
+        // Use event delegation for removing variants and image inputs
+        document.addEventListener('click', function(e) {
+          // Remove variant
+          if (e.target.closest('.remove-variant')) {
+            const container = e.target.closest('.variant-form-group');
+            const destroyInput = container.querySelector('input[name*="_destroy"]');
+            if (destroyInput) {
+              destroyInput.value = '1';
+              container.style.display = 'none';
+            } else {
+              container.remove();
+            }
+          }
+          
+          // Remove image input
+          if (e.target.closest('.remove-image-input')) {
+            const container = e.target.closest('.image-input-group');
+            container.remove();
+          }
+        });
+      });
+    </script>
 
     <!-- Hide Product -->
     <div>

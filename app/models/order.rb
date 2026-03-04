@@ -3,7 +3,7 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
   
   # 验证
-  validates :total_price, presence: true, numericality: { greater_than: 0 }
+  validates :total_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :status, presence: true, inclusion: { in: %w[pending paid shipped completed] }
   validates :name, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }

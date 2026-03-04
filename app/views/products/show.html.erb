@@ -11,15 +11,37 @@
 
   <div class="bg-white shadow-xl rounded-lg overflow-hidden">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- 左侧：产品图片 -->
-      <div class="bg-gray-100 p-8 flex items-center justify-center">
-        <% if @product.image.attached? %>
-          <%= image_tag @product.image, 
-              class: "w-full h-auto rounded-lg shadow-md",
-              alt: @product.name %>
+      <div class="bg-gray-100 p-4 flex flex-col space-y-4">
+        <% if @product.images.attached? %>
+          <div id="image-ambient" class="relative aspect-square w-full overflow-hidden rounded-xl bg-white shadow-inner">
+            <%= image_tag @product.images.first, 
+                class: "w-full h-full object-cover transition-all duration-500",
+                id: "main-product-image",
+                data: { main_image: true },
+                alt: @product.name %>
+            <!-- 氛围光线（鼠标跟随径向渐变） -->
+            <span class="pointer-events-none absolute inset-0 mix-blend-screen opacity-0 md:opacity-100" style="background: radial-gradient(140px 140px at var(--lx,50%) var(--ly,50%), rgba(99,102,241,0.25), rgba(236,72,153,0.18), transparent 65%);"></span>
+          </div>
+          
+          <% if @product.images.count > 1 %>
+            <div class="grid grid-cols-5 gap-3 mt-2">
+              <% @product.images.each_with_index do |image, index| %>
+                <button type="button" 
+                        class="thumbnail-btn relative aspect-square rounded-lg overflow-hidden border-2 transition-all duration-200 <%= index == 0 ? 'border-blue-600 ring-2 ring-blue-100' : 'border-transparent hover:border-gray-300' %>"
+                        onclick="changeMainImage(this, '<%= url_for(image) %>')">
+                  <%= image_tag image, class: "w-full h-full object-cover" %>
+                </button>
+              <% end %>
+            </div>
+          <% end %>
         <% else %>
-          <div class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
-            <span class="text-gray-400 text-2xl">No Product Image</span>
+          <div class="w-full aspect-square bg-gray-200 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-300">
+            <div class="text-center">
+              <svg class="w-16 h-16 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <span class="text-gray-400 font-medium">No Image Available</span>
+            </div>
           </div>
         <% end %>
       </div>
@@ -33,10 +55,26 @@
 
         <!-- 价格 -->
         <div class="mb-6">
-          <span class="text-4xl font-bold text-blue-600">
-            ¥<%= number_to_currency(@product.price, unit: "", precision: 2) %>
-          </span>
+          <% if @product.variants.any? %>
+            <div id="price-display" class="text-4xl font-bold text-blue-600">
+              ¥<%= number_to_currency(@product.min_price, unit: "", precision: 2) %>
+              <% if @product.min_price != @product.max_price %>
+                - ¥<%= number_to_currency(@product.max_price, unit: "", precision: 2) %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-4xl font-bold text-blue-600">
+              ¥<%= number_to_currency(@product.price, unit: "", precision: 2) %>
+            </div>
+          <% end %>
         </div>
+
+        <!-- Summary -->
+        <% if @product.summary.present? %>
+          <p class="text-lg text-gray-600 mb-6 font-medium italic">
+            <%= @product.summary %>
+          </p>
+        <% end %>
 
         <!-- 分隔线 -->
         <div class="border-t border-gray-200 my-6"></div>
@@ -54,14 +92,76 @@
         </div>
 
         <!-- 购买按钮区域 -->
-        <div class="space-y-3">
-          <%= button_to add_to_cart_product_path(@product), method: :post, class: "w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg transition-colors text-lg flex items-center justify-center" do %>
-            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-            </svg>
-            <span>Add to Cart</span>
+        <div class="space-y-6">
+          <%= form_with url: add_to_cart_product_path(@product), method: :post do |f| %>
+            <% if @product.variants.active.any? %>
+              <div class="mb-6">
+                <label class="block text-sm font-bold text-gray-700 uppercase mb-3 tracking-wider">Select Option</label>
+                <div class="grid grid-cols-2 gap-3">
+                  <% @product.variants.active.ordered.each_with_index do |variant, index| %>
+                    <label class="variant-option relative flex items-center justify-center p-4 border-2 rounded-lg cursor-pointer hover:border-blue-500 transition-all duration-200 group <%= index == 0 ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-100' : 'border-gray-200' %>" 
+                           onclick="updatePrice('<%= number_to_currency(variant.price, unit: '¥', precision: 2) %>'); selectVariant(this)">
+                      <input type="radio" name="variant_id" value="<%= variant.id %>" class="sr-only" <%= 'checked' if index == 0 %>>
+                      <div class="text-center pointer-events-none">
+                        <span class="block text-sm font-bold text-gray-900"><%= variant.title %></span>
+                        <span class="block text-xs text-gray-500 mt-1">¥<%= number_to_currency(variant.price, unit: "", precision: 2) %></span>
+                      </div>
+                    </label>
+                  <% end %>
+                </div>
+              </div>
+              
+              <%= f.submit "Add to Cart", class: "w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg transition-colors text-lg flex items-center justify-center cursor-pointer" %>
+            <% else %>
+              <div class="p-4 bg-red-50 text-red-700 rounded-lg text-center font-bold">
+                Currently Unavailable
+              </div>
+            <% end %>
           <% end %>
         </div>
+
+        <script>
+          function updatePrice(price) {
+            const priceEl = document.getElementById('price-display');
+            if (priceEl) {
+              priceEl.classList.add('scale-110', 'text-blue-700');
+              setTimeout(() => {
+                priceEl.innerText = price;
+                priceEl.classList.remove('scale-110', 'text-blue-700');
+              }, 100);
+            }
+          }
+
+          function selectVariant(label) {
+            document.querySelectorAll('label.variant-option').forEach(el => {
+              el.classList.remove('border-blue-600', 'bg-blue-50', 'ring-2', 'ring-blue-100');
+              el.classList.add('border-gray-200');
+            });
+            label.classList.remove('border-gray-200');
+            label.classList.add('border-blue-600', 'bg-blue-50', 'ring-2', 'ring-blue-100');
+            const input = label.querySelector('input');
+            if (input) input.checked = true;
+          }
+
+          function changeMainImage(btn, src) {
+            const mainImg = document.getElementById('main-product-image');
+            if (mainImg) {
+              mainImg.classList.add('opacity-0');
+              setTimeout(() => {
+                mainImg.src = src;
+                mainImg.classList.remove('opacity-0');
+              }, 200);
+            }
+            
+            // Update active state of thumbnails
+            document.querySelectorAll('.thumbnail-btn').forEach(el => {
+              el.classList.remove('border-blue-600', 'ring-2', 'ring-blue-100');
+              el.classList.add('border-transparent');
+            });
+            btn.classList.remove('border-transparent');
+            btn.classList.add('border-blue-600', 'ring-2', 'ring-blue-100');
+          }
+        </script>
 
         <!-- 产品信息 -->
         <div class="mt-8 pt-6 border-t border-gray-200">
@@ -89,8 +189,8 @@
         <%= link_to product_path(related_product), class: "group" do %>
           <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
             <div class="aspect-square bg-gray-200">
-              <% if related_product.image.attached? %>
-                <%= image_tag related_product.image, 
+              <% if related_product.images.attached? %>
+                <%= image_tag related_product.images.first, 
                     class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300",
                     alt: related_product.name %>
               <% else %>
@@ -100,9 +200,13 @@
               <% end %>
             </div>
             <div class="p-4">
-              <h3 class="font-semibold text-gray-900 mb-2"><%= related_product.name %></h3>
+              <h3 class="font-semibold text-gray-900 mb-2 truncate"><%= related_product.name %></h3>
               <p class="text-xl font-bold text-blue-600">
-                ¥<%= number_to_currency(related_product.price, unit: "", precision: 2) %>
+                <% if related_product.variants.any? %>
+                  ¥<%= number_to_currency(related_product.min_price, unit: "", precision: 2) %>+
+                <% else %>
+                  ¥<%= number_to_currency(related_product.price, unit: "", precision: 2) %>
+                <% end %>
               </p>
             </div>
           </div>
@@ -110,4 +214,58 @@
       <% end %>
     </div>
   </div>
+
+<!-- 页面内联动效样式（作用域到本页） -->
+<style>
+  /* 主图滚动视差（轻微） */
+  #image-ambient { will-change: transform; }
+
+  /* 缩略图选中态的更顺滑过渡 */
+  .thumbnail-btn { transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+  .thumbnail-btn:hover { transform: translateY(-1px); }
+</style>
+
+<!-- 页面内联脚本，仅本页生效 -->
+<script>
+  // 使用 Turbo 生命周期，返回时重新初始化；缓存前清理以防残留样式
+  (function(){
+    let scrollHandler = null;
+    let mouseHandler = null;
+
+    function init(){
+      const ambient = document.getElementById('image-ambient');
+      if (!ambient) return;
+
+      // 滚动视差
+      scrollHandler = ()=>{
+        const y = window.scrollY;
+        ambient.style.transform = `translateY(${y * 0.06}px)`;
+      };
+      window.addEventListener('scroll', scrollHandler, { passive: true });
+      scrollHandler();
+
+      // 氛围光线：跟随鼠标
+      mouseHandler = (e)=>{
+        const rect = ambient.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        ambient.style.setProperty('--lx', x + '%');
+        ambient.style.setProperty('--ly', y + '%');
+      };
+      ambient.addEventListener('mousemove', mouseHandler);
+    }
+
+    function cleanup(){
+      const ambient = document.getElementById('image-ambient');
+      if (scrollHandler){ window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
+      if (ambient && mouseHandler){ ambient.removeEventListener('mousemove', mouseHandler); mouseHandler = null; }
+      if (ambient){ ambient.style.transform = ''; ambient.style.removeProperty('--lx'); ambient.style.removeProperty('--ly'); }
+    }
+
+    document.addEventListener('turbo:load', init);
+    document.addEventListener('turbo:render', init);
+    document.addEventListener('turbo:before-cache', cleanup);
+  })();
+</script>
+
 </div>

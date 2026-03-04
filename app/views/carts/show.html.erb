@@ -11,13 +11,15 @@
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
           <div class="divide-y divide-gray-200">
             <% @cart_items.each do |cart_item| %>
+              <% variant = cart_item.product_variant %>
+              <% product = variant.product %>
               <div class="p-6 hover:bg-gray-50 transition">
                 <div class="flex items-center space-x-4">
                   <!-- 商品图片 -->
                   <div class="flex-shrink-0">
-                    <%= link_to product_path(cart_item.product) do %>
-                      <% if cart_item.product.image.attached? %>
-                        <%= image_tag cart_item.product.image, class: "h-24 w-24 object-cover rounded-lg" %>
+                    <%= link_to product_path(product) do %>
+                      <% if product.images.attached? %>
+                        <%= image_tag product.images.first, class: "h-24 w-24 object-cover rounded-lg" %>
                       <% else %>
                         <div class="h-24 w-24 bg-gray-200 rounded-lg flex items-center justify-center">
                           <span class="text-gray-400 text-xs">No Image</span>
@@ -28,8 +30,9 @@
 
                   <!-- 商品信息 -->
                   <div class="flex-1 min-w-0">
-                    <%= link_to cart_item.product.name, product_path(cart_item.product), class: "text-lg font-semibold text-gray-900 hover:text-blue-600" %>
-                    <p class="text-sm text-gray-500 mt-1">Unit Price: ¥<%= number_to_currency(cart_item.product.price, unit: "", precision: 2) %></p>
+                    <%= link_to product.name, product_path(product), class: "text-lg font-semibold text-gray-900 hover:text-blue-600" %>
+                    <p class="text-sm text-gray-600 font-medium mt-1">Option: <%= variant.title %></p>
+                    <p class="text-sm text-gray-500 mt-1">Unit Price: ¥<%= number_to_currency(variant.price, unit: "", precision: 2) %></p>
                     
                     <!-- 数量控制 -->
                     <div class="mt-3 flex items-center space-x-3 cart-quantity-controls">

@@ -5,10 +5,20 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#index"
     get "dashboard", to: "dashboard#index"
-    resources :products
+    resources :categories
+    resources :products do
+      member do
+        delete :remove_image
+      end
+    end
     resources :orders, only: [:index, :show] do
       member do
         patch :update_status
+      end
+    end
+    resources :inquiries, only: [:index, :show, :destroy] do
+      member do
+        patch :mark_as_read
       end
     end
   end
@@ -29,7 +39,12 @@ Rails.application.routes.draw do
   end
   
   # Orders (订单)
-  resources :orders, only: [:new, :create, :show]
+  resources :orders, only: [:new, :create, :show] do
+    member do
+      post :create_paypal_order
+      post :capture_paypal_order
+    end
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -43,4 +58,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+  get "refund_policy", to: "home#refund_policy"
+  get "help_center", to: "home#help_center"
+  get "contact_us", to: "home#contact_us"
+  post "contact_us", to: "home#create_inquiry"
 end

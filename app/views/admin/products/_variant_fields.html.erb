@@ -1,0 +1,29 @@
+<div class="variant-form-group p-4 border border-gray-200 rounded-lg bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+  <div class="md:col-span-2">
+    <%= f.input :title, placeholder: "Title (e.g. 12 inch / 300ml)", label: "Variant Title", input_html: { class: "w-full rounded border-gray-300" } %>
+  </div>
+  <div>
+    <%= f.input :price, placeholder: "0.00", label: "Price", input_html: { class: "w-full rounded border-gray-300" } %>
+  </div>
+  <div>
+    <%= f.input :stock, placeholder: "0", label: "Stock", input_html: { class: "w-full rounded border-gray-300" } %>
+  </div>
+  <div>
+    <%= f.input :sku, placeholder: "SKU", label: "SKU", input_html: { class: "w-full rounded border-gray-300" } %>
+  </div>
+  <div>
+    <%= f.input :length, placeholder: "Length (Optional)", label: "Length", input_html: { class: "w-full rounded border-gray-300" } %>
+  </div>
+  <div>
+    <%= f.input :position, label: "Sort Order", input_html: { class: "w-full rounded border-gray-300" } %>
+  </div>
+  <div class="flex items-center space-x-2 mt-6">
+    <%= f.input :is_active, as: :boolean, label: "Active", wrapper_html: { class: "mb-0" } %>
+    <% if f.object.new_record? %>
+      <button type="button" class="remove-variant text-red-600 hover:text-red-800 text-sm font-medium">Remove</button>
+    <% else %>
+      <%= f.hidden_field :_destroy %>
+      <button type="button" class="remove-variant text-red-600 hover:text-red-800 text-sm font-medium">Remove</button>
+    <% end %>
+  </div>
+</div>
