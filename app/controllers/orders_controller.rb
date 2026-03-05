@@ -11,13 +11,13 @@ class OrdersController < ApplicationController
     @order = @cart.build_order(order_params)
     
     if @order.save
-      # 清空购物车
+      # Clear the cart
       @cart.cart_items.destroy_all
       session[:cart_id] = nil
-      
-      # 存储订单ID到session用于待支付提醒
+    
+      # Store order ID in session for payment reminder
       session[:pending_order_id] = @order.id
-      
+    
       redirect_to order_path(@order), notice: "Order created successfully! Order #: #{@order.id}"
     else
       render :new, status: :unprocessable_entity
@@ -31,9 +31,9 @@ class OrdersController < ApplicationController
   def create_paypal_order
     @order = Order.find(params[:id])
     
-    # 这里通常会调用 PayPal API 创建订单，但为了简化，
-    # 我们将直接由前端处理创建逻辑。
-    # 这里我们返回订单的必要信息给前端
+    # Typically, you would call the PayPal API to create an order here.
+    # For simplicity, we'll handle the creation logic on the frontend.
+    # We return the necessary order information to the frontend.
     render json: { id: @order.id, amount: @order.total_price }
   end
 
@@ -41,9 +41,9 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     # paypal_order_id = params[:paypal_order_id]
     
-    # 理想情况下，后端应该在这里调用 PayPal API 验证并捕获订单
-    # 但根据用户需求，我们要快速实现“完整”功能。
-    # 假设前端已经处理了支付并调用了此端点。
+    # Ideally, the backend should call the PayPal API here to verify and capture the order.
+    # However, per user requirements, we're implementing a "full" functionality quickly.
+    # Assuming the frontend has handled payment and called this endpoint.
     
     if @order.update(status: 'paid')
       render json: { status: 'COMPLETED' }
@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
   
   def check_cart_not_empty
     if current_cart.cart_items.empty?
-      redirect_to cart_path, alert: "购物车是空的，请先添加商品"
+      redirect_to cart_path, alert: "Your cart is empty, please add items first."
     end
   end
 end

@@ -1,8 +1,9 @@
 class Order < ApplicationRecord
+  # Associations
   has_many :order_items, dependent: :destroy
   has_many :products, through: :order_items
   
-  # 验证
+  # Validations
   validates :total_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :status, presence: true, inclusion: { in: %w[pending paid shipped completed] }
   validates :name, presence: true
@@ -10,7 +11,7 @@ class Order < ApplicationRecord
   validates :phone, presence: true
   validates :address, presence: true
   
-  # 状态机
+  # Status state machine methods
   def pending?
     status == "pending"
   end

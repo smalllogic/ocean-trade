@@ -3,46 +3,46 @@ class Cart < ApplicationRecord
   has_many :product_variants, through: :cart_items
   has_many :products, through: :product_variants
   
-  # 添加变体到购物车
+  # Add variant to cart
   def add_variant_to_cart(variant)
-    # 查找该变体是否已在购物车中
+    # Check if this variant is already in the cart
     cart_item = cart_items.find_by(product_variant_id: variant.id)
     
     if cart_item
-      # 如果已存在，数量 +1
+      # If exists, increment quantity
       cart_item.increment!(:quantity)
     else
-      # 如果不存在，创建新的 CartItem
+      # If not exists, create new CartItem
       cart_items.create(product_variant: variant, quantity: 1)
     end
   end
   
-  # 计算购物车总价
+  # Calculate cart total price
   def total_price
     cart_items.includes(:product_variant).sum { |item| item.product_variant.price * item.quantity }
   end
   
-  # 获取购物车商品总数量
+  # Get total quantity of items in cart
   def total_quantity
     cart_items.sum(:quantity)
   end
   
-  # 从购物车创建订单
+  # Build order from cart
   def build_order(order_params = {})
-    # 创建新订单
+    # Create new order
     order = Order.new(order_params)
     order.status = "pending"
     
-    # 遍历购物车项目，创建订单项目
+    # Iterate through cart items and build order items
     cart_items.includes(:product_variant).each do |cart_item|
       order.order_items.build(
         product_variant: cart_item.product_variant,
-        price: cart_item.product_variant.price,  # 冻结当前价格
+        price: cart_item.product_variant.price,  # Freeze current price
         quantity: cart_item.quantity
       )
     end
     
-    # 计算订单总价
+    # Calculate order total price
     order.total_price = order.order_items.sum { |item| item.price * item.quantity }
     
     order

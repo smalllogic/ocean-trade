@@ -1,35 +1,59 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="min-h-[80vh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-8">
+      Edit Profile
+    </h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-6" }) do |f| %>
+        <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+        <div class="form-inputs space-y-4">
+          <%= f.input :email, required: true, autofocus: true,
+                      label_html: { class: "block text-sm font-medium text-gray-700" },
+                      input_html: { class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-    <% end %>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <p class="text-sm text-yellow-600">Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+          <% end %>
 
-    <%= f.input :password,
-                hint: "leave it blank if you don't want to change it",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
+          <%= f.input :password,
+                      hint: "leave it blank if you don't want to change it",
+                      required: false,
+                      label_html: { class: "block text-sm font-medium text-gray-700" },
+                      hint_html: { class: "mt-1 text-xs text-gray-500" },
+                      input_html: { autocomplete: "new-password", class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+          <%= f.input :password_confirmation,
+                      required: false,
+                      label_html: { class: "block text-sm font-medium text-gray-700" },
+                      input_html: { autocomplete: "new-password", class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+          <%= f.input :current_password,
+                      hint: "we need your current password to confirm your changes",
+                      required: true,
+                      label_html: { class: "block text-sm font-medium text-gray-700" },
+                      hint_html: { class: "mt-1 text-xs text-gray-500" },
+                      input_html: { autocomplete: "current-password", class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" } %>
+        </div>
+
+        <div class="form-actions pt-2">
+          <%= f.button :submit, "Update", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+        </div>
+      <% end %>
+
+      <div class="mt-10 pt-6 border-t border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">Cancel my account</h3>
+        <div class="mt-4 flex items-center justify-between">
+          <p class="text-sm text-gray-500">Unhappy with our service?</p>
+          <%= button_to "Cancel account", registration_path(resource_name), 
+              data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, 
+              method: :delete,
+              class: "inline-flex items-center px-3 py-2 border border-red-300 shadow-sm text-sm leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors" %>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <%= link_to "Back", :back, class: "text-sm text-gray-500 hover:text-gray-700" %>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>
