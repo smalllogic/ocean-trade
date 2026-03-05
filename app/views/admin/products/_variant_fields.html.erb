@@ -11,8 +11,11 @@
   <div>
     <%= f.input :sku, placeholder: "SKU", label: "SKU", input_html: { class: "w-full rounded border-gray-300" } %>
   </div>
-  <div>
-    <%= f.input :length, placeholder: "Length (Optional)", label: "Length", input_html: { class: "w-full rounded border-gray-300" } %>
+  <div class="md:col-span-1">
+    <%= f.input :length, placeholder: "Length (Optional)", label: "Length", input_html: { class: "w-full rounded border-gray-300" }, hint: "Fill only one: Capacity or Length" %>
+  </div>
+  <div class="md:col-span-1">
+    <%= f.input :capacity, placeholder: "Capacity (Optional)", label: "Capacity", input_html: { class: "w-full rounded border-gray-300" }, hint: "Fill only one: Capacity or Length" %>
   </div>
   <div>
     <%= f.input :position, label: "Sort Order", input_html: { class: "w-full rounded border-gray-300" } %>

@@ -62,7 +62,7 @@ class Admin::ProductsController < Admin::BaseController
     params.require(:product).permit(
       :name, :price, :description, :summary, :product_type, :sort_order, :is_hidden, :category_id, 
       images: [], 
-      variants_attributes: [:id, :title, :price, :stock, :sku, :position, :length, :is_active, :_destroy]
+      variants_attributes: [:id, :title, :price, :stock, :sku, :position, :length, :capacity, :is_active, :_destroy]
     )
   end
 end

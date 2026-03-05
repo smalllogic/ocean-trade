@@ -104,6 +104,11 @@
                       <input type="radio" name="variant_id" value="<%= variant.id %>" class="sr-only" <%= 'checked' if index == 0 %>>
                       <div class="text-center pointer-events-none">
                         <span class="block text-sm font-bold text-gray-900"><%= variant.title %></span>
+                        <% if variant.length.present? %>
+                          <span class="block text-xs text-gray-400 mt-1 italic">Length: <%= variant.length %></span>
+                        <% elsif variant.capacity.present? %>
+                          <span class="block text-xs text-gray-400 mt-1 italic">Capacity: <%= variant.capacity %></span>
+                        <% end %>
                         <span class="block text-xs text-gray-500 mt-1">$<%= number_to_currency(variant.price, unit: "", precision: 2) %></span>
                       </div>
                     </label>
