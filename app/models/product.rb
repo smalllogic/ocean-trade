@@ -11,16 +11,15 @@ class Product < ApplicationRecord
 
   # 验证
   validates :name, presence: true, length: { maximum: 255 }
-  # 移除 price 必填验证，或者保留并允许为 nil
-  validates :price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :description, length: { maximum: 5000 }
-  validates :product_type, inclusion: { in: %w(hair care), allow_blank: true }
   
-  # 业务约束 1: product 只能挂最底层分类（叶子分类）
+  # 业务约束 1: product 挂载最底层分类（叶子分类）
   validate :category_must_be_leaf
   
-  # 验证：如果没有任何变体，则必须填写产品价格
-  validate :price_required_if_no_variants
+  # 验证：必须有活动的变体
+  validate :at_least_one_active_variant
+  # 验证：变体的错误也冒泡到 product 上
+  validate :variants_must_be_valid
 
   # 作用域
   scope :visible, -> { where(is_hidden: false) }
@@ -34,11 +33,11 @@ class Product < ApplicationRecord
   end
 
   def min_price
-    variants.active.minimum(:price) || price
+    variants.active.minimum(:price) || 0
   end
 
   def max_price
-    variants.active.maximum(:price) || price
+    variants.active.maximum(:price) || 0
   end
   def hidden?
     is_hidden
@@ -52,16 +51,24 @@ class Product < ApplicationRecord
 
   def category_must_be_leaf
     if category.present? && !category.leaf?
-      errors.add(:category_id, "must be a leaf category (cannot have sub-categories)")
+      errors.add(:category_id, "必须选择最底层的分类（不能选择包含子分类的分类）")
     end
   end
 
-  def price_required_if_no_variants
-    # 如果没有活动的变体，且没有设置主价格，则报错
-    # 注意：在创建时，variants 可能还没保存，通过 variants_attributes 传进来的可以通过 variants 对象访问
+  def at_least_one_active_variant
     active_variants = variants.reject(&:marked_for_destruction?).select { |v| v.is_active? }
-    if active_variants.empty? && price.nil?
-      errors.add(:price, "is required if no active variants are defined")
+    if active_variants.empty?
+      errors.add(:base, "必须至少设置一个有效的产品规格（变体）")
+    end
+  end
+
+  def variants_must_be_valid
+    variants.each do |variant|
+      if variant.invalid?
+        variant.errors.full_messages.each do |msg|
+          errors.add(:base, "规格错误: #{msg}")
+        end
+      end
     end
   end
 end

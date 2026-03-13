@@ -1,88 +1,84 @@
-<nav class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50" data-controller="mobile-menu">
-  <div class="container mx-auto px-4">
-    <div class="flex justify-between items-center h-16">
-      <!-- 左侧导航 -->
-      <div class="flex items-center space-x-8">
-        <%= link_to root_path, class: "flex items-center" do %>
-          <img src="/logo.jpg" class="h-10 w-auto" alt="Fandisha Logo">
+<nav class="bg-white shadow-xl fixed top-0 left-0 right-0 z-50 border-b border-slate-200" data-controller="mobile-menu">
+  <div class="container mx-auto px-4 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <!-- Logo & Main Nav -->
+      <div class="flex items-center space-x-12">
+        <%= link_to root_path, class: "flex items-center group transition-transform hover:scale-105" do %>
+          <%= image_tag "logo.jpg", class: "h-12 w-auto border border-slate-100 rounded shadow-sm", alt: "Ocean Trade Logo" %>
+          <div class="ml-3 hidden lg:block text-slate-900">
+            <span class="block text-sm font-bold tracking-widest uppercase">Ocean Trade</span>
+            <span class="block text-[10px] text-slate-500 font-medium tracking-tighter opacity-80 uppercase">US CHINA INTERNATIONAL</span>
+          </div>
         <% end %>
         
-        <div class="hidden md:flex items-center space-x-8">
-          <%= link_to "Home", root_path, class: "text-gray-900 hover:text-emerald-600 font-bold tracking-tight transition-all duration-300 hover:scale-110 active:scale-95" %>
-          <%# 最顶层分类作为导航入口 %>
+        <div class="hidden md:flex items-center space-x-10">
+          <%= link_to "Home", root_path, class: "text-slate-600 hover:text-orange-600 font-bold text-sm tracking-widest uppercase transition-colors" %>
+          
           <% Category.where(parent_id: nil).order(:id).each do |top_cat| %>
-            <%= link_to top_cat.name, products_path(category_id: top_cat.id), class: "text-gray-900 hover:text-emerald-600 font-bold tracking-tight transition-all duration-300 hover:scale-110 active:scale-95" %>
+            <%= link_to top_cat.name, products_path(category_id: top_cat.id), class: "text-slate-600 hover:text-orange-600 font-bold text-sm tracking-widest uppercase transition-colors" %>
           <% end %>
 
-          <%= link_to "Contact Us", contact_us_path, class: "text-gray-900 hover:text-emerald-600 font-bold tracking-tight transition-all duration-300 hover:scale-110 active:scale-95" %>
+          <%= link_to "Contact", contact_us_path, class: "text-slate-600 hover:text-orange-600 font-bold text-sm tracking-widest uppercase transition-colors" %>
 
           <% if user_signed_in? && current_user.admin? %>
-            <%= link_to "Admin Panel", admin_root_path, class: "text-purple-600 hover:text-purple-800 font-extrabold tracking-tight transition-all duration-300 hover:scale-110 active:scale-95" %>
+            <%= link_to "Admin", admin_root_path, class: "text-orange-600 hover:text-orange-500 font-black text-sm tracking-widest uppercase animate-pulse border-b border-orange-600/30" %>
           <% end %>
         </div>
       </div>
       
-      <!-- 右侧用户区域 -->
-      <div class="flex items-center space-x-4">
-        <!-- 购物车图标 -->
-        <%= link_to cart_path, class: "relative text-gray-700 hover:text-blue-600 transition" do %>
+      <!-- User Actions -->
+      <div class="flex items-center space-x-6">
+        <!-- Cart -->
+        <%= link_to cart_path, class: "relative p-2.5 text-slate-600 hover:text-orange-600 transition-all hover:bg-slate-50 rounded-full" do %>
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
           </svg>
           <% if current_cart.total_quantity > 0 %>
-            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+            <span class="absolute top-0 right-0 bg-orange-600 text-white text-[10px] font-black rounded-full h-5 w-5 flex items-center justify-center border-2 border-white shadow-lg">
               <%= current_cart.total_quantity %>
             </span>
           <% end %>
         <% end %>
         
-        <!-- 待支付订单图标 -->
-        <% if session[:pending_order_id].present? %>
-          <% pending_order = Order.find_by(id: session[:pending_order_id], status: 'pending') %>
-          <% if pending_order %>
-            <%= link_to order_path(pending_order), class: "relative text-amber-600 hover:text-amber-700 transition", title: "Pending Payment" do %>
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-              </svg>
-              <span class="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                1
-              </span>
-            <% end %>
+        <!-- Auth -->
+        <div class="hidden md:flex items-center">
+          <% if user_signed_in? %>
+            <div class="flex items-center space-x-4">
+              <span class="text-xs text-slate-500 font-medium tracking-wide">ID: <%= current_user.email.split('@').first %></span>
+              <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete }, 
+                  class: "text-xs font-bold text-slate-600 hover:text-slate-900 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded border border-slate-200 transition" %>
+            </div>
+          <% else %>
+            <%= link_to "Login", new_user_session_path, class: "text-sm font-bold text-slate-600 hover:text-slate-900 transition" %>
           <% end %>
-        <% end %>
-        
-        <% if user_signed_in? %>
-          <% if current_user.admin? %>
-            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2 py-1 rounded">Admin</span>
-          <% end %>
-          <span class="text-gray-600">Welcome, <%= current_user.email %></span>
-          <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete }, 
-              class: "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition" %>
-        <% end %>
-      </div>
-      
-      <!-- 移动端菜单按钮 -->
-      <div class="md:hidden">
-        <button type="button" class="text-gray-700 hover:text-blue-600" data-action="click->mobile-menu#toggle">
-          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button type="button" class="md:hidden p-2 text-slate-600" data-action="click->mobile-menu#toggle">
+          <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
       </div>
     </div>
     
-    <div class="hidden md:hidden pb-4" id="mobile-menu">
-      <div class="flex flex-col space-y-4 pt-2">
-        <%= link_to "Home", root_path, class: "text-gray-900 hover:text-emerald-600 font-bold py-2 border-b border-gray-100" %>
-        <%= link_to "Policy", refund_policy_path, class: "text-gray-900 hover:text-emerald-600 font-bold py-2 border-b border-gray-100" %>
-        <%= link_to "Contact Us", contact_us_path, class: "text-gray-900 hover:text-emerald-600 font-bold py-2 border-b border-gray-100" %>
-        <%# 顶级分类（移动端） %>
+    <!-- Mobile Menu -->
+    <div class="hidden md:hidden pb-10 pt-4 bg-white" id="mobile-menu">
+      <div class="flex flex-col space-y-6">
+        <%= link_to "Home", root_path, class: "text-slate-900 text-lg font-bold tracking-widest border-l-4 border-transparent hover:border-orange-500 pl-4 py-2" %>
         <% Category.where(parent_id: nil).order(:id).each do |top_cat| %>
-          <%= link_to top_cat.name, products_path(category_id: top_cat.id), class: "text-gray-900 hover:text-emerald-600 font-bold py-2 border-b border-gray-100" %>
+          <%= link_to top_cat.name, products_path(category_id: top_cat.id), class: "text-slate-900 text-lg font-bold tracking-widest border-l-4 border-transparent hover:border-orange-500 pl-4 py-2" %>
         <% end %>
-        <% if user_signed_in? && current_user.admin? %>
-          <%= link_to "Admin Panel", admin_root_path, class: "text-purple-600 hover:text-purple-800 font-extrabold py-2 border-b border-gray-100" %>
-        <% end %>
+        <%= link_to "Contact", contact_us_path, class: "text-slate-900 text-lg font-bold tracking-widest border-l-4 border-transparent hover:border-orange-500 pl-4 py-2" %>
+        
+        <div class="pt-6 mt-6 border-t border-slate-100">
+          <% if user_signed_in? %>
+            <div class="text-slate-500 mb-4 px-4">Signed in as <%= current_user.email %></div>
+            <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete }, class: "text-red-500 font-bold px-4" %>
+          <% else %>
+            <%= link_to "Login", new_user_session_path, class: "text-orange-600 font-bold px-4" %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

@@ -10,7 +10,7 @@ class Admin::ProductsController < Admin::BaseController
   
   def new
     @product = Product.new
-    @product.variants.build # 默认创建一个变体
+    # 不在这里默认创建变体，让用户需要时再点 Add Variant
   end
   
   def create
@@ -42,8 +42,12 @@ class Admin::ProductsController < Admin::BaseController
   end
   
   def destroy
-    @product.destroy
-    redirect_to admin_products_path, notice: "Product deleted successfully"
+    begin
+      @product.destroy
+      redirect_to admin_products_path, notice: "Product deleted successfully"
+    rescue ActiveRecord::InvalidForeignKey
+      redirect_to admin_product_path(@product), alert: "无法删除该产品，因为它已在订单中被引用。您可以选择隐藏该产品。"
+    end
   end
 
   def remove_image
@@ -60,7 +64,7 @@ class Admin::ProductsController < Admin::BaseController
   
   def product_params
     params.require(:product).permit(
-      :name, :price, :description, :summary, :product_type, :sort_order, :is_hidden, :category_id, 
+      :name, :description, :summary, :sort_order, :is_hidden, :category_id, 
       images: [], 
       variants_attributes: [:id, :title, :price, :stock, :sku, :position, :length, :capacity, :is_active, :_destroy]
     )
