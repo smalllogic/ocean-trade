@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  static targets = [ "menu" ]
+
   toggle() {
-    const menu = document.getElementById('mobile-menu')
-    menu.classList.toggle('hidden')
+    this.menuTarget.classList.toggle('hidden')
   }
 }
