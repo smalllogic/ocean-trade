@@ -51,14 +51,14 @@ class Product < ApplicationRecord
 
   def category_must_be_leaf
     if category.present? && !category.leaf?
-      errors.add(:category_id, "必须选择最底层的分类（不能选择包含子分类的分类）")
+      errors.add(:category_id, "must be a leaf category (cannot select a category that contains subcategories)")
     end
   end
 
   def at_least_one_active_variant
     active_variants = variants.reject(&:marked_for_destruction?).select { |v| v.is_active? }
     if active_variants.empty?
-      errors.add(:base, "必须至少设置一个有效的产品规格（变体）")
+      errors.add(:base, "must have at least one active product variant")
     end
   end
 
@@ -66,7 +66,7 @@ class Product < ApplicationRecord
     variants.each do |variant|
       if variant.invalid?
         variant.errors.full_messages.each do |msg|
-          errors.add(:base, "规格错误: #{msg}")
+          errors.add(:base, "Variant error: #{msg}")
         end
       end
     end

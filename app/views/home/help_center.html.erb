@@ -4,7 +4,7 @@
       Resource Center
     </div>
     <h1 class="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none uppercase mb-20 underline decoration-orange-500 decoration-8 underline-offset-8">
-      帮助中心
+      Help Center
     </h1>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
@@ -12,17 +12,17 @@
       <div class="lg:col-span-1">
         <div class="sticky top-32 space-y-10">
           <div class="p-8 border-4 border-slate-900 bg-slate-50">
-            <h3 class="text-xs font-black uppercase tracking-widest text-slate-900 mb-6">目录 / Sections</h3>
+            <h3 class="text-xs font-black uppercase tracking-widest text-slate-900 mb-6">Sections</h3>
             <nav class="space-y-4 font-bold text-sm uppercase tracking-tighter">
-              <a href="#shipping" class="block hover:text-orange-600 transition-colors">物流与交付 / Logistics</a>
-              <a href="#quality" class="block hover:text-orange-600 transition-colors">产品与质量 / Quality</a>
-              <a href="#payment" class="block hover:text-orange-600 transition-colors">支付与安全 / Payments</a>
+              <a href="#shipping" class="block hover:text-orange-600 transition-colors">Logistics & Delivery</a>
+              <a href="#quality" class="block hover:text-orange-600 transition-colors">Product & Quality</a>
+              <a href="#payment" class="block hover:text-orange-600 transition-colors">Payment & Security</a>
             </nav>
           </div>
           
           <div class="bg-orange-600 p-8 text-white">
             <h4 class="text-sm font-black uppercase mb-4 tracking-tight">Need Support?</h4>
-            <p class="text-xs font-bold leading-relaxed mb-6 opacity-90">我们的贸易专家随时为您解答技术指标与采购流程问题。</p>
+            <p class="text-xs font-bold leading-relaxed mb-6 opacity-90">Our trade experts are always ready to answer your technical specifications and procurement process questions.</p>
             <%= link_to "Contact Us", contact_us_path, class: "block text-center py-3 border-2 border-white font-black text-[10px] uppercase tracking-widest hover:bg-white hover:text-orange-600 transition-all" %>
           </div>
         </div>
@@ -32,41 +32,41 @@
       <div class="lg:col-span-2 space-y-24">
         <!-- Section: Logistics -->
         <section id="shipping">
-          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">物流与交付 / Logistics</h2>
+          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">Logistics & Delivery</h2>
           <div class="space-y-12">
             <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">发货需要多长时间?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">标准订单处理通常需要 1-3 个工作日。国际贸易订单视货柜排期与目的地航线而定，通常为 15-30 天。</p>
+              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">How long does shipping take?</h3>
+              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">Standard order processing usually takes 1-3 business days. International trade orders depend on container scheduling and destination routes, typically 15-30 days.</p>
             </div>
             <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">如何追踪我的货柜?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">发货后，我们将提供提单号 (B/L) 或国际物流单号，您可通过我们的系统或物流商官网实时监控。</p>
+              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">How to track my container?</h3>
+              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">After shipping, we will provide a Bill of Lading (B/L) or international tracking number, which you can monitor in real-time through our system or the carrier's official website.</p>
             </div>
           </div>
         </section>
 
         <!-- Section: Quality -->
         <section id="quality">
-          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">产品与质量 / Quality</h2>
+          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">Product & Quality</h2>
           <div class="space-y-12">
             <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">产品符合哪些国际安全标准?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">Ocean Trade 提供的劳保用品严格符合 CE (EN388, EN420) 及 ANSI 安全认证，适用于高强度工业环境。</p>
+              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">What international safety standards do products comply with?</h3>
+              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">Safety supplies provided by Ocean Trade strictly comply with CE (EN388, EN420) and ANSI safety certifications, suitable for high-intensity industrial environments.</p>
             </div>
             <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">可以提供样品进行测试吗?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">针对企业大宗采购客户，我们支持付费样品申请。样品测试合格后，首单大货可抵扣样品费用。</p>
+              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">Can samples be provided for testing?</h3>
+              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">For corporate bulk procurement customers, we support paid sample applications. After the sample passes testing, the cost can be deducted from the first bulk order.</p>
             </div>
           </div>
         </section>
 
         <!-- Section: Payments -->
         <section id="payment">
-          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">支付与安全 / Payments</h2>
+          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">Payment & Security</h2>
           <div class="space-y-12">
             <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">你们接受哪些结算方式?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">我们接受主流信用卡、T/T 电汇及 L/C 信用证结算，确保大额贸易的资金安全性。</p>
+              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">What settlement methods do you accept?</h3>
+              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">We accept major credit cards, T/T (Telegraphic Transfer), and L/C (Letter of Credit) settlements to ensure the security of large trade funds.</p>
             </div>
           </div>
         </section>
@@ -74,8 +74,8 @@
     </div>
 
     <div class="mt-32 pt-20 border-t-4 border-slate-900 text-center">
-      <h2 class="text-3xl font-black text-slate-900 uppercase tracking-tighter mb-8">仍有未解决的问题?</h2>
-      <%= link_to "发送邮件至 support@oceantrade.com →", "mailto:support@oceantrade.com", class: "text-lg font-black text-orange-600 hover:text-slate-900 transition-colors" %>
+      <h2 class="text-3xl font-black text-slate-900 uppercase tracking-tighter mb-8">Still have unresolved questions?</h2>
+      <%= link_to "Email us at support@oceantrade.com →", "mailto:support@oceantrade.com", class: "text-lg font-black text-orange-600 hover:text-slate-900 transition-colors" %>
     </div>
   </div>
 </div>

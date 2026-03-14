@@ -17,7 +17,7 @@
         </h1>
       <% else %>
         <h1 class="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
-          全部防护产品
+          All Protection Products
         </h1>
         <p class="text-slate-400 mt-6 font-bold text-sm tracking-widest uppercase">Browse our industrial safety collection</p>
       <% end %>
@@ -32,9 +32,9 @@
         <div class="sticky top-32 space-y-12">
           <!-- Category Tree -->
           <div>
-            <h3 class="text-xs font-black uppercase tracking-[0.3em] text-slate-900 mb-8 border-l-4 border-orange-600 pl-4">产品目录</h3>
+            <h3 class="text-xs font-black uppercase tracking-[0.3em] text-slate-900 mb-8 border-l-4 border-orange-600 pl-4">Product Catalog</h3>
             <div class="space-y-2">
-              <%= link_to "显示所有产品", products_path, class: "block py-2 text-sm font-bold #{!params[:category_id] ? 'text-orange-600' : 'text-slate-500 hover:text-orange-600'} transition-colors" %>
+              <%= link_to "Show All Products", products_path, class: "block py-2 text-sm font-bold #{!params[:category_id] ? 'text-orange-600' : 'text-slate-500 hover:text-orange-600'} transition-colors" %>
               <% Category.where(parent_id: nil).order(:id).each do |top_cat| %>
                 <div class="space-y-1">
                   <%= link_to top_cat.name, products_path(category_id: top_cat.id), 
@@ -55,9 +55,9 @@
 
           <!-- Contact Widget -->
           <div class="bg-slate-50 p-8 border border-slate-100">
-            <h4 class="text-sm font-black uppercase tracking-tight mb-4">需要批量定制？</h4>
-            <p class="text-xs text-slate-500 font-medium leading-relaxed mb-6">针对大型工厂及工程项目，我们提供极具竞争力的阶梯报价与定制服务。</p>
-            <%= link_to "获取大宗报价", contact_us_path, class: "block text-center py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-colors" %>
+            <h4 class="text-sm font-black uppercase tracking-tight mb-4">Need Bulk Customization?</h4>
+            <p class="text-xs text-slate-500 font-medium leading-relaxed mb-6">For large factories and engineering projects, we provide highly competitive tiered pricing and customization services.</p>
+            <%= link_to "Get Bulk Quote", contact_us_path, class: "block text-center py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-colors" %>
           </div>
         </div>
       </aside>
@@ -103,7 +103,7 @@
         <% else %>
           <div class="py-20 text-center border-2 border-dashed border-slate-100">
             <div class="text-4xl mb-4">📦</div>
-            <h2 class="text-xl font-black text-slate-900 uppercase">暂无此类产品</h2>
+            <h2 class="text-xl font-black text-slate-900 uppercase">No products found</h2>
             <p class="text-slate-400 mt-2 font-bold text-xs uppercase">Coming Soon / Under Update</p>
           </div>
         <% end %>

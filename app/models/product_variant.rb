@@ -6,7 +6,7 @@ class ProductVariant < ApplicationRecord
   validates :title, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :stock, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :sku, uniqueness: { allow_blank: true, message: "已经被其他规格占用了" }
+  validates :sku, uniqueness: { allow_blank: true, message: "has already been taken by another variant" }
   
   validate :sku_uniqueness_in_product
   validate :capacity_or_length_only
@@ -21,10 +21,10 @@ class ProductVariant < ApplicationRecord
   def sku_uniqueness_in_product
     return if sku.blank? || !product
     
-    # 检查当前产品下其他未保存或已保存的规格是否有相同 SKU
+    # Check if other unsaved or saved variants under the current product have the same SKU
     duplicate_skus = product.variants.select { |v| v != self && v.sku == sku }
     if duplicate_skus.any?
-      errors.add(:sku, "在该产品内重复")
+      errors.add(:sku, "is duplicated within this product")
     end
   end
 
