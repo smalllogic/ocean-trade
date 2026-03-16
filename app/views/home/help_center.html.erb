@@ -1,81 +1,197 @@
-<div class="bg-white min-h-screen pt-32 pb-32">
-  <div class="container mx-auto px-6 lg:px-12 max-w-6xl">
-    <div class="inline-block bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.3em] px-6 py-3 mb-10">
-      Resource Center
+<div class="bg-gradient-to-br from-slate-50 via-white to-orange-50 min-h-screen py-24 relative overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-30">
+    <div class="absolute top-40 left-20 w-80 h-80 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl"></div>
+    <div class="absolute bottom-40 right-20 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl"></div>
+  </div>
+  
+  <div class="container mx-auto px-6 lg:px-12 max-w-7xl relative z-10">
+    <!-- Header -->
+    <div class="text-center max-w-4xl mx-auto mb-16">
+      <div class="inline-flex items-center space-x-2 bg-orange-100 text-orange-700 px-6 py-2.5 rounded-full mb-8">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-xs font-bold uppercase tracking-wider">Support Center</span>
+      </div>
+      <h1 class="text-5xl md:text-6xl font-black text-slate-900 tracking-tight mb-6">
+        How Can We <span class="text-orange-600">Help</span>?
+      </h1>
+      <p class="text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
+        Find answers to common questions about our products, shipping, and services
+      </p>
     </div>
-    <h1 class="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none uppercase mb-20 underline decoration-orange-500 decoration-8 underline-offset-8">
-      Help Center
-    </h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
-      <!-- FAQ Sidebar Navigation -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+      <!-- Sidebar Navigation -->
       <div class="lg:col-span-1">
-        <div class="sticky top-32 space-y-10">
-          <div class="p-8 border-4 border-slate-900 bg-slate-50">
-            <h3 class="text-xs font-black uppercase tracking-widest text-slate-900 mb-6">Sections</h3>
-            <nav class="space-y-4 font-bold text-sm uppercase tracking-tighter">
-              <a href="#shipping" class="block hover:text-orange-600 transition-colors">Logistics & Delivery</a>
-              <a href="#quality" class="block hover:text-orange-600 transition-colors">Product & Quality</a>
-              <a href="#payment" class="block hover:text-orange-600 transition-colors">Payment & Security</a>
+        <div class="sticky top-32 space-y-6">
+          <!-- Navigation Menu -->
+          <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100">
+            <h3 class="text-sm font-black text-slate-900 mb-6 flex items-center">
+              <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+              </svg>
+              Topics
+            </h3>
+            <nav class="space-y-2">
+              <a href="#shipping" class="flex items-center px-4 py-3 rounded-lg text-slate-600 font-semibold hover:bg-orange-50 hover:text-orange-600 transition-all group">
+                <span class="w-2 h-2 bg-slate-300 rounded-full mr-3 group-hover:bg-orange-500 transition-colors"></span>
+                Shipping & Delivery
+              </a>
+              <a href="#quality" class="flex items-center px-4 py-3 rounded-lg text-slate-600 font-semibold hover:bg-orange-50 hover:text-orange-600 transition-all group">
+                <span class="w-2 h-2 bg-slate-300 rounded-full mr-3 group-hover:bg-orange-500 transition-colors"></span>
+                Product Quality
+              </a>
+              <a href="#payment" class="flex items-center px-4 py-3 rounded-lg text-slate-600 font-semibold hover:bg-orange-50 hover:text-orange-600 transition-all group">
+                <span class="w-2 h-2 bg-slate-300 rounded-full mr-3 group-hover:bg-orange-500 transition-colors"></span>
+                Payment Methods
+              </a>
             </nav>
           </div>
           
-          <div class="bg-orange-600 p-8 text-white">
-            <h4 class="text-sm font-black uppercase mb-4 tracking-tight">Need Support?</h4>
-            <p class="text-xs font-bold leading-relaxed mb-6 opacity-90">Our trade experts are always ready to answer your technical specifications and procurement process questions.</p>
-            <%= link_to "Contact Us", contact_us_path, class: "block text-center py-3 border-2 border-white font-black text-[10px] uppercase tracking-widest hover:bg-white hover:text-orange-600 transition-all" %>
+          <!-- Contact CTA -->
+          <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-6 rounded-2xl text-white shadow-xl shadow-orange-500/30">
+            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+              </svg>
+            </div>
+            <h4 class="text-lg font-black mb-3">Need Help?</h4>
+            <p class="text-sm font-medium leading-relaxed mb-4 opacity-90">Can't find what you're looking for? Our support team is here to help.</p>
+            <%= link_to "Contact Support", contact_us_path, class: "block w-full text-center py-3 bg-white text-orange-600 font-bold rounded-lg hover:bg-orange-50 transition-all" %>
           </div>
         </div>
       </div>
 
       <!-- FAQ Content -->
-      <div class="lg:col-span-2 space-y-24">
-        <!-- Section: Logistics -->
-        <section id="shipping">
-          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">Logistics & Delivery</h2>
-          <div class="space-y-12">
-            <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">How long does shipping take?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">Standard order processing usually takes 1-3 business days. International trade orders depend on container scheduling and destination routes, typically 15-30 days.</p>
+      <div class="lg:col-span-3 space-y-16">
+        <!-- Section: Shipping -->
+        <section id="shipping" class="scroll-mt-32">
+          <div class="flex items-center mb-8">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/30">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
+              </svg>
             </div>
-            <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">How to track my container?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">After shipping, we will provide a Bill of Lading (B/L) or international tracking number, which you can monitor in real-time through our system or the carrier's official website.</p>
+            <h2 class="text-2xl font-black text-slate-900">Shipping & Delivery</h2>
+          </div>
+          
+          <div class="space-y-4">
+            <!-- FAQ Item 1 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="p-6">
+                <h3 class="text-lg font-black text-slate-900 mb-3 flex items-start">
+                  <span class="text-orange-600 mr-3">Q:</span>
+                  How long does shipping take?
+                </h3>
+                <p class="text-slate-600 font-medium leading-relaxed pl-8">
+                  Standard order processing takes 1-3 business days. International orders typically take 15-30 days depending on destination and customs clearance. We'll provide tracking information once your order ships.
+                </p>
+              </div>
+            </div>
+            
+            <!-- FAQ Item 2 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="p-6">
+                <h3 class="text-lg font-black text-slate-900 mb-3 flex items-start">
+                  <span class="text-orange-600 mr-3">Q:</span>
+                  How can I track my order?
+                </h3>
+                <p class="text-slate-600 font-medium leading-relaxed pl-8">
+                  After shipping, you'll receive a tracking number via email. You can track your order through our website or the carrier's official tracking system. For container shipments, we provide Bill of Lading (B/L) documentation.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- Section: Quality -->
-        <section id="quality">
-          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">Product & Quality</h2>
-          <div class="space-y-12">
-            <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">What international safety standards do products comply with?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">Safety supplies provided by Ocean Trade strictly comply with CE (EN388, EN420) and ANSI safety certifications, suitable for high-intensity industrial environments.</p>
+        <section id="quality" class="scroll-mt-32">
+          <div class="flex items-center mb-8">
+            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-green-500/30">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
             </div>
-            <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">Can samples be provided for testing?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">For corporate bulk procurement customers, we support paid sample applications. After the sample passes testing, the cost can be deducted from the first bulk order.</p>
+            <h2 class="text-2xl font-black text-slate-900">Product Quality & Standards</h2>
+          </div>
+          
+          <div class="space-y-4">
+            <!-- FAQ Item 1 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="p-6">
+                <h3 class="text-lg font-black text-slate-900 mb-3 flex items-start">
+                  <span class="text-orange-600 mr-3">Q:</span>
+                  What safety certifications do your products have?
+                </h3>
+                <p class="text-slate-600 font-medium leading-relaxed pl-8">
+                  All our safety equipment meets international standards including CE (EN388, EN420) and ANSI certifications. Each product batch undergoes rigorous third-party testing to ensure compliance with industrial safety requirements.
+                </p>
+              </div>
+            </div>
+            
+            <!-- FAQ Item 2 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="p-6">
+                <h3 class="text-lg font-black text-slate-900 mb-3 flex items-start">
+                  <span class="text-orange-600 mr-3">Q:</span>
+                  Can I order samples for testing?
+                </h3>
+                <p class="text-slate-600 font-medium leading-relaxed pl-8">
+                  Yes! We offer paid samples for bulk procurement customers. Sample costs can be deducted from your first bulk order. Contact our sales team to arrange sample testing.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- Section: Payments -->
-        <section id="payment">
-          <h2 class="text-xs font-black uppercase tracking-[0.2em] mb-10 border-l-4 border-orange-600 pl-4 text-slate-900">Payment & Security</h2>
-          <div class="space-y-12">
-            <div>
-              <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">What settlement methods do you accept?</h3>
-              <p class="text-slate-500 font-bold leading-relaxed uppercase tracking-wide">We accept major credit cards, T/T (Telegraphic Transfer), and L/C (Letter of Credit) settlements to ensure the security of large trade funds.</p>
+        <!-- Section: Payment -->
+        <section id="payment" class="scroll-mt-32">
+          <div class="flex items-center mb-8">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-purple-500/30">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h2 class="text-2xl font-black text-slate-900">Payment & Security</h2>
+          </div>
+          
+          <div class="space-y-4">
+            <!-- FAQ Item 1 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="p-6">
+                <h3 class="text-lg font-black text-slate-900 mb-3 flex items-start">
+                  <span class="text-orange-600 mr-3">Q:</span>
+                  What payment methods do you accept?
+                </h3>
+                <p class="text-slate-600 font-medium leading-relaxed pl-8">
+                  We accept major credit cards, bank transfers (T/T), and Letters of Credit (L/C) for large orders. All transactions are secured with industry-standard encryption to protect your financial information.
+                </p>
+              </div>
             </div>
           </div>
         </section>
       </div>
     </div>
 
-    <div class="mt-32 pt-20 border-t-4 border-slate-900 text-center">
-      <h2 class="text-3xl font-black text-slate-900 uppercase tracking-tighter mb-8">Still have unresolved questions?</h2>
-      <%= link_to "Email us at oceantrade327@gmail.com →", "mailto:oceantrade327@gmail.com", class: "text-lg font-black text-orange-600 hover:text-slate-900 transition-colors" %>
+    <!-- Bottom CTA -->
+    <div class="mt-24 max-w-4xl mx-auto">
+      <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-12 text-center shadow-2xl">
+        <div class="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-orange-500/30">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-black text-white mb-4">Still Have Questions?</h2>
+        <p class="text-slate-300 font-medium mb-8 max-w-xl mx-auto">
+          Our support team is ready to help you with any questions about our products or services.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <%= link_to "Email Us", "mailto:oceantrade327@gmail.com", class: "inline-flex items-center justify-center px-8 py-4 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-700 transition-all" %>
+          <%= link_to "Contact Support", contact_us_path, class: "inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 text-white font-bold rounded-lg hover:bg-white/10 transition-all" %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
